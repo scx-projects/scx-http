@@ -1,0 +1,58 @@
+package cool.scx.http.media.event_stream;
+
+import cool.scx.io.ByteInput;
+
+import java.nio.charset.Charset;
+
+import static cool.scx.http.media.event_stream.EventStreamHelper.LF_BYTES;
+
+public class ClientEventStream implements AutoCloseable {
+
+    private final ByteInput byteInput;
+    private final Charset charset;
+
+    public ClientEventStream(ByteInput byteInput, Charset charset) {
+        this.byteInput = byteInput;
+        this.charset = charset;
+    }
+
+    /// 读取事件
+    public SseEvent readEvent() {
+        var event = SseEvent.of();
+
+        // 解析事件
+        while (true) {
+
+            var bytes = byteInput.readUntil(LF_BYTES);
+
+            var line = new String(bytes, charset);
+
+            if (line.isEmpty()) {
+                // 事件结束, 返回 SseEvent
+                return event;
+            }
+
+            if (line.startsWith("event: ")) {
+                event.event(line.substring(7).trim());
+            } else if (line.startsWith("data: ")) {
+                event.data(line.substring(6).trim());
+            } else if (line.startsWith("id: ")) {
+                event.id(line.substring(4).trim());
+            } else if (line.startsWith("retry: ")) {
+                try {
+                    event.retry(Long.parseLong(line.substring(7).trim()));
+                } catch (NumberFormatException e) {
+                    // 如果格式错误, 可以忽略
+                }
+            } else if (line.startsWith(": ")) {
+                event.comment(line.substring(2).trim());
+            }
+        }
+    }
+
+    @Override
+    public void close() {
+        this.byteInput.close();
+    }
+
+}
