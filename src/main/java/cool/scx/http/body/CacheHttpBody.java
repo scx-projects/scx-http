@@ -15,7 +15,7 @@ import static cool.scx.io.supplier.ClosePolicyByteSupplier.singleClose;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class CacheHttpBody implements ScxHttpBody {
+public final class CacheHttpBody implements ScxHttpBody {
 
     private final ByteInput byteInput;
     private final ScxHttpHeaders headers;

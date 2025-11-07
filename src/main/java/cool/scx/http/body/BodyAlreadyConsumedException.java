@@ -4,7 +4,7 @@ package cool.scx.http.body;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class BodyAlreadyConsumedException extends IllegalStateException {
+public final class BodyAlreadyConsumedException extends IllegalStateException {
 
     public BodyAlreadyConsumedException() {
         super("The body has already been consumed.");
