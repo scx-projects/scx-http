@@ -16,11 +16,11 @@ import static cool.scx.object.ScxObject.toJson;
 import static cool.scx.object.ScxObject.toXml;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-/// ObjectWriter  逻辑参考 {@link cool.scx.http.media.node.NodeMediaWriter}
+/// ObjectMediaWriter  逻辑参考 {@link cool.scx.http.media.node.NodeMediaWriter}
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class ObjectMediaWriter implements MediaWriter {
+public final class ObjectMediaWriter implements MediaWriter {
 
     private final Object object;
     private byte[] data;

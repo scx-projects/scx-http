@@ -19,7 +19,7 @@ import static cool.scx.http.media_type.MediaType.APPLICATION_XML;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class NodeMediaReader implements MediaReader<Node> {
+public final class NodeMediaReader implements MediaReader<Node> {
 
     public static final NodeMediaReader NODE_MEDIA_READER = new NodeMediaReader();
 

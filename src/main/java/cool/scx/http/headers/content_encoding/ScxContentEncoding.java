@@ -1,6 +1,9 @@
 package cool.scx.http.headers.content_encoding;
 
-/// ContentEncoding
+/// ScxContentEncoding
+///
+/// @author scx567888
+/// @version 0.0.1
 public sealed interface ScxContentEncoding permits ContentEncoding, ScxContentEncodingImpl {
 
     static ScxContentEncoding of(String v) {

@@ -6,8 +6,12 @@ import cool.scx.io.exception.ScxIOException;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
-// todo 协议处理上 可能有一些 小 bug, 比如内容中存在 换行符?
-public class EventStreamHelper {
+/// EventStreamHelper
+/// todo 协议处理上 可能有一些 小 bug, 比如内容中存在 换行符?
+///
+/// @author scx567888
+/// @version 0.0.1
+public final class EventStreamHelper {
 
     public static final byte[] LF_BYTES = "\n".getBytes();
 

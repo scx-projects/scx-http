@@ -1,5 +1,9 @@
 package cool.scx.http.media.event_stream;
 
+/// SseEventWritable
+///
+/// @author scx567888
+/// @version 0.0.1
 public interface SseEventWritable extends SseEvent {
 
     /// 事件类型

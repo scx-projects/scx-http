@@ -6,8 +6,11 @@ import cool.scx.io.ByteInput;
 
 import static cool.scx.http.media.string.StringMediaReader.getContentTypeCharsetOrUTF8;
 
-/// ClientEventStreamReader
-public class ClientEventStreamMediaReader implements MediaReader<ClientEventStream> {
+/// ClientEventStreamMediaReader
+///
+/// @author scx567888
+/// @version 0.0.1
+public final class ClientEventStreamMediaReader implements MediaReader<ClientEventStream> {
 
     public static final ClientEventStreamMediaReader CLIENT_EVENT_STREAM_MEDIA_READER = new ClientEventStreamMediaReader();
 

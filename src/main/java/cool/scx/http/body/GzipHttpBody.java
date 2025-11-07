@@ -15,7 +15,7 @@ import static cool.scx.http.headers.content_encoding.ContentEncoding.GZIP;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class GzipHttpBody implements ScxHttpBody {
+public final class GzipHttpBody implements ScxHttpBody {
 
     private final ScxHttpHeaders headers;
     private final ByteInput gzipByteInput;

@@ -6,7 +6,7 @@ import cool.scx.http.parameters.ParametersImpl;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class FormParamsImpl extends ParametersImpl<String, String> implements FormParamsWritable {
+public final class FormParamsImpl extends ParametersImpl<String, String> implements FormParamsWritable {
 
     public FormParamsImpl() {
 

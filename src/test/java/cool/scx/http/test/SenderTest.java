@@ -6,12 +6,9 @@ import cool.scx.http.media.MediaWriter;
 import cool.scx.http.sender.BodyAlreadySentException;
 import cool.scx.http.sender.HttpSendException;
 import cool.scx.http.sender.ScxHttpSender;
-import cool.scx.io.ByteOutput;
-import cool.scx.io.ScxIO;
+import cool.scx.io.ByteArrayByteOutput;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.ByteArrayOutputStream;
 
 public class SenderTest {
 
@@ -30,16 +27,14 @@ public class SenderTest {
 
     public static class TestHttpSender implements ScxHttpSender<TestHttpSender> {
 
-        public final ByteOutput byteOut;
-        private final ByteArrayOutputStream out;
+        public final ByteArrayByteOutput byteOut;
         private final ScxHttpHeadersWritable responseHeaders;
         private final ScxHttpHeaders requestHeaders;
 
         public TestHttpSender(ScxHttpHeadersWritable responseHeaders, ScxHttpHeaders requestHeaders) {
             this.responseHeaders = responseHeaders;
             this.requestHeaders = requestHeaders;
-            this.out = new ByteArrayOutputStream();
-            this.byteOut = ScxIO.outputStreamToByteOutput(out);
+            this.byteOut = new ByteArrayByteOutput();
         }
 
         @Override
@@ -50,11 +45,11 @@ public class SenderTest {
         }
 
         public byte[] getBytes() {
-            return out.toByteArray();
+            return byteOut.bytes();
         }
 
         public String getString() {
-            return new String(out.toByteArray());
+            return new String(byteOut.bytes());
         }
 
     }

@@ -14,11 +14,11 @@ import java.nio.file.OpenOption;
 
 /// 将内容写入到文件
 ///
-/// 这里不支持 复杂的写入 比如指定文件的偏移量和写入长度, 因为 用户可以拿到 ByteInput 自行操作.
+/// 这里设计为不支持 复杂的写入 比如指定文件的偏移量和写入长度, 因为 用户可以拿到 ByteInput 自行完成这些操作.
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class FileMediaReader implements MediaReader<File> {
+public final class FileMediaReader implements MediaReader<File> {
 
     private final File file;
     private final boolean createDirs;

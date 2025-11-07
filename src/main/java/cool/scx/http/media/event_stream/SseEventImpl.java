@@ -1,6 +1,10 @@
 package cool.scx.http.media.event_stream;
 
-public class SseEventImpl implements SseEventWritable {
+/// SseEventImpl
+///
+/// @author scx567888
+/// @version 0.0.1
+public final class SseEventImpl implements SseEventWritable {
 
     private String event;
     private String data;

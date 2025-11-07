@@ -4,6 +4,10 @@ import cool.scx.collections.multi_map.IMultiMapEntry;
 
 import java.util.Iterator;
 
+/// ParametersIterator
+///
+/// @author scx567888
+/// @version 0.0.1
 public class ParametersIterator<K, V> implements Iterator<ParameterEntry<K, V>> {
 
     private final Iterator<IMultiMapEntry<K, V>> iterator;

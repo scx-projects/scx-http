@@ -20,7 +20,7 @@ import static cool.scx.http.media_type.MediaType.APPLICATION_OCTET_STREAM;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class FileMediaWriter implements MediaWriter {
+public final class FileMediaWriter implements MediaWriter {
 
     private final File file;
     private final long length;

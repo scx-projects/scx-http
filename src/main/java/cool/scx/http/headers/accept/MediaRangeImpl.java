@@ -3,7 +3,7 @@ package cool.scx.http.headers.accept;
 import cool.scx.http.parameters.Parameters;
 import cool.scx.http.parameters.ParametersWritable;
 
-/// AcceptImpl
+/// MediaRangeImpl
 ///
 /// @author scx567888
 /// @version 0.0.1

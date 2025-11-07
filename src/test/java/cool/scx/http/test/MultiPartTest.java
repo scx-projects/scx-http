@@ -8,13 +8,12 @@ import cool.scx.http.media.multi_part.MultiPartPart;
 import cool.scx.http.media.multi_part.MultiPartStream;
 import cool.scx.http.media_type.MediaType;
 import cool.scx.http.media_type.ScxMediaType;
+import cool.scx.io.ByteArrayByteOutput;
 import cool.scx.io.DefaultByteInput;
-import cool.scx.io.ScxIO;
 import cool.scx.io.supplier.ByteArrayByteSupplier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import static cool.scx.http.media.multi_part.MultiPartStreamMediaReader.MULTI_PART_STREAM_MEDIA_READER;
@@ -55,7 +54,7 @@ public class MultiPartTest {
             MultiPart read = MULTI_PART_STREAM_MEDIA_READER.read(s, ScxHttpHeaders.of().contentType(ScxMediaType.of(MediaType.MULTIPART_FORM_DATA).boundary("wwwwwwwwww")));
 
             for (MultiPartPart multiPartPart : read) {
-
+                // 什么都不做
             }
 
         }
@@ -68,7 +67,7 @@ public class MultiPartTest {
             MultiPart read = MULTI_PART_STREAM_MEDIA_READER.read(s, ScxHttpHeaders.of().contentType(ScxMediaType.of(MediaType.MULTIPART_FORM_DATA).boundary("wwwwwwwwww")));
 
             for (MultiPartPart multiPartPart : read) {
-                //
+                // 什么都不做
             }
 
         }
@@ -117,9 +116,9 @@ public class MultiPartTest {
     private static byte[] createMultiPartBytes(MultiPart multipart) {
         var ss = new MultiPartMediaWriter(multipart);
 
-        var b = new ByteArrayOutputStream();
-        ss.write(ScxIO.outputStreamToByteOutput(b));
-        return b.toByteArray();
+        var b = new ByteArrayByteOutput();
+        ss.write(b);
+        return b.bytes();
     }
 
 }

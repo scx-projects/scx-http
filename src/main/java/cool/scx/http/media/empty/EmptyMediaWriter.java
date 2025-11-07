@@ -11,7 +11,7 @@ import cool.scx.io.exception.ScxIOException;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class EmptyMediaWriter implements MediaWriter {
+public final class EmptyMediaWriter implements MediaWriter {
 
     public static final EmptyMediaWriter EMPTY_MEDIA_WRITER = new EmptyMediaWriter();
 

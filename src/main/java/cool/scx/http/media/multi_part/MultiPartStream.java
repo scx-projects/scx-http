@@ -12,13 +12,13 @@ import cool.scx.io.supplier.BoundaryByteSupplier;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static cool.scx.io.supplier.SpecialCloseByteSupplier.noCloseDrain;
+import static cool.scx.io.supplier.ClosePolicyByteSupplier.noCloseDrain;
 
 /// MultiPartStream
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class MultiPartStream implements MultiPart, Iterator<MultiPartPart>, AutoCloseable {
+public final class MultiPartStream implements MultiPart, Iterator<MultiPartPart>, AutoCloseable {
 
     private static final byte[] CRLF_CRLF_BYTES = "\r\n\r\n".getBytes();
     private final String boundary; // xxx

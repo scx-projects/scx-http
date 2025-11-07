@@ -12,7 +12,7 @@ import static cool.scx.http.uri.URIEncoder.encodeURIComponent;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class ScxURIHelper {
+public final class ScxURIHelper {
 
     public static ParametersWritable<String, String> decodeQuery(String value) {
         ParametersWritable<String, String> query = Parameters.of();

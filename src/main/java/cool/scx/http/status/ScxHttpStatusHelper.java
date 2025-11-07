@@ -4,6 +4,10 @@ import java.util.EnumMap;
 
 import static cool.scx.http.status.HttpStatus.*;
 
+/// ScxHttpStatusHelper
+///
+/// @author scx567888
+/// @version 0.0.1
 public final class ScxHttpStatusHelper {
 
     private static final EnumMap<HttpStatus, String> MAP = initMap();

@@ -5,8 +5,12 @@ import cool.scx.http.media.event_stream.SseEvent;
 
 import java.util.function.Consumer;
 
-// todo 关于 线程 和 close 的处理有问题 !
-public class EventClientEventStream {
+/// EventClientEventStream
+/// todo 关于 线程 和 close 的处理有问题 !
+///
+/// @author scx567888
+/// @version 0.0.1
+public final class EventClientEventStream {
 
     private final ClientEventStream eventStream;
     private Consumer<SseEvent> eventHandler;

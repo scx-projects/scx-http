@@ -13,7 +13,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class ServerEventStreamMediaWriter implements MediaWriter {
+public final class ServerEventStreamMediaWriter implements MediaWriter {
 
     private ServerEventStream eventStream;
 

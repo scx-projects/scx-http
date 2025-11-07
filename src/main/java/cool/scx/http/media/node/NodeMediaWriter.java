@@ -19,7 +19,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class NodeMediaWriter implements MediaWriter {
+public final class NodeMediaWriter implements MediaWriter {
 
     private final Node jsonNode;
     private byte[] data;

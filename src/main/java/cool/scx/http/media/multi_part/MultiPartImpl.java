@@ -8,7 +8,7 @@ import java.util.List;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class MultiPartImpl implements MultiPartWritable {
+public final class MultiPartImpl implements MultiPartWritable {
 
     private final List<MultiPartPart> parts;
     private String boundary;
