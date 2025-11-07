@@ -32,8 +32,8 @@ public interface ScxHttpServerResponse extends ScxHttpSender<Void>, ScxHttpHeade
 
     //******************** 简化操作 *******************
 
-    default ScxHttpServerResponse statusCode(int code) {
-        return statusCode(ScxHttpStatusCode.of(code));
+    default ScxHttpServerResponse statusCode(int statusCode) {
+        return statusCode(ScxHttpStatusCode.of(statusCode));
     }
 
 }
