@@ -10,12 +10,10 @@ import cool.scx.http.media_type.MediaType;
 import cool.scx.http.media_type.ScxMediaType;
 import cool.scx.io.ByteArrayByteOutput;
 import cool.scx.io.DefaultByteInput;
-import cool.scx.io.ScxIO;
 import cool.scx.io.supplier.ByteArrayByteSupplier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 import static cool.scx.http.media.multi_part.MultiPartStreamMediaReader.MULTI_PART_STREAM_MEDIA_READER;
