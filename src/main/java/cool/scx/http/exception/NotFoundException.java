@@ -1,6 +1,6 @@
 package cool.scx.http.exception;
 
-import static cool.scx.http.status.HttpStatus.NOT_FOUND;
+import static cool.scx.http.status_code.HttpStatusCode.NOT_FOUND;
 
 /// NotFoundException
 ///
