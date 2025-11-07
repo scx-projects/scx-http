@@ -3,12 +3,12 @@ package cool.scx.http.headers;
 import java.util.HashMap;
 import java.util.Map;
 
-/// HttpFieldName
+/// HttpHeaderName
 ///
 /// @author scx567888
 /// @version 0.0.1
 /// @see <a href="https://www.iana.org/assignments/http-fields/http-fields.xhtml">https://www.iana.org/assignments/http-fields/http-fields.xhtml</a>
-public enum HttpFieldName implements ScxHttpHeaderName {
+public enum HttpHeaderName implements ScxHttpHeaderName {
 
     ACCEPT("Accept"),
     ACCEPT_ENCODING("Accept-Encoding"),
@@ -73,17 +73,17 @@ public enum HttpFieldName implements ScxHttpHeaderName {
     VIA("Via"),
     WWW_AUTHENTICATE("WWW-Authenticate");
 
-    private static final Map<String, HttpFieldName> MAP = initMap();
+    private static final Map<String, HttpHeaderName> MAP = initMap();
 
     private final String value;
 
-    HttpFieldName(String value) {
+    HttpHeaderName(String value) {
         this.value = value;
     }
 
-    private static Map<String, HttpFieldName> initMap() {
-        var map = new HashMap<String, HttpFieldName>();
-        for (var h : HttpFieldName.values()) {
+    private static Map<String, HttpHeaderName> initMap() {
+        var map = new HashMap<String, HttpHeaderName>();
+        for (var h : HttpHeaderName.values()) {
             map.put(h.value().toLowerCase(), h);
         }
         return map;
@@ -91,7 +91,7 @@ public enum HttpFieldName implements ScxHttpHeaderName {
 
     /// @param v v
     /// @return 未找到 抛出异常
-    public static HttpFieldName of(String v) {
+    public static HttpHeaderName of(String v) {
         var h = find(v);
         if (h == null) {
             throw new IllegalArgumentException(v);
@@ -101,7 +101,7 @@ public enum HttpFieldName implements ScxHttpHeaderName {
 
     /// @param v v
     /// @return 未找到返回 null
-    public static HttpFieldName find(String v) {
+    public static HttpHeaderName find(String v) {
         var lowerCase = v.toLowerCase();
         return MAP.get(lowerCase);
     }

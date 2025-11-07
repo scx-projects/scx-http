@@ -6,7 +6,7 @@ import cool.scx.http.exception.InternalServerErrorException;
 import cool.scx.http.exception.ScxHttpException;
 import cool.scx.http.headers.accept.Accept;
 import cool.scx.http.media_type.ScxMediaType;
-import cool.scx.http.status.ScxHttpStatus;
+import cool.scx.http.status_code.ScxHttpStatusCode;
 import cool.scx.object.ScxObject;
 
 import java.lang.System.Logger;
@@ -15,7 +15,7 @@ import java.util.Map;
 import static cool.scx.http.error_handler.ErrorPhaseHelper.getErrorPhaseStr;
 import static cool.scx.http.media_type.MediaType.APPLICATION_JSON;
 import static cool.scx.http.media_type.MediaType.TEXT_HTML;
-import static cool.scx.http.status.ScxHttpStatusHelper.getReasonPhrase;
+import static cool.scx.http.status_code.ScxHttpStatusCodeHelper.getReasonPhrase;
 import static java.lang.System.Logger.Level.ERROR;
 import static java.lang.System.getLogger;
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -52,12 +52,12 @@ public class DefaultHttpServerErrorHandler implements ScxHttpServerErrorHandler 
         this.useDevelopmentErrorPage = useDevelopmentErrorPage;
     }
 
-    public static void sendToClient(ScxHttpStatus status, String info, ScxHttpServerRequest request) {
+    public static void sendToClient(ScxHttpStatusCode statusCode, String info, ScxHttpServerRequest request) {
         //防止页面出现 null 这种奇怪的情况
         if (info == null) {
             info = "";
         }
-        var reasonPhrase = getReasonPhrase(status, "unknown");
+        var reasonPhrase = getReasonPhrase(statusCode, "unknown");
         Accept accepts = null;
         try {
             accepts = request.headers().accept();
@@ -66,16 +66,16 @@ public class DefaultHttpServerErrorHandler implements ScxHttpServerErrorHandler 
         }
         //根据 accept 返回不同的错误信息 只有明确包含的时候才返回 html
         if (accepts != null && accepts.contains(TEXT_HTML)) {
-            var htmlStr = String.format(htmlTemplate, reasonPhrase, status.code(), reasonPhrase, info);
+            var htmlStr = String.format(htmlTemplate, reasonPhrase, statusCode.value(), reasonPhrase, info);
             request.response()
                     .contentType(ScxMediaType.of(TEXT_HTML).charset(UTF_8))
-                    .status(status)
+                    .statusCode(statusCode)
                     .send(htmlStr);
         } else {
-            var jsonStr = ScxObject.toJson(Map.of("status", status.code(), "title", reasonPhrase, "info", info));
+            var jsonStr = ScxObject.toJson(Map.of("statusCode", statusCode.value(), "title", reasonPhrase, "info", info));
             request.response()
                     .contentType(ScxMediaType.of(APPLICATION_JSON).charset(UTF_8))
-                    .status(status)
+                    .statusCode(statusCode)
                     .send(jsonStr);
         }
     }
@@ -91,7 +91,7 @@ public class DefaultHttpServerErrorHandler implements ScxHttpServerErrorHandler 
                 info = ExceptionUtils.getStackTraceString(cause);
             }
         }
-        sendToClient(scxHttpException.status(), info, request);
+        sendToClient(scxHttpException.statusCode(), info, request);
     }
 
     @Override

@@ -1,11 +1,11 @@
-package cool.scx.http.status;
+package cool.scx.http.status_code;
 
-/// HttpStatus
+/// HttpStatusCode
 ///
 /// @author scx567888
 /// @version 0.0.1
 /// @see <a href="https://www.rfc-editor.org/rfc/rfc9110#name-status-codes">https://www.rfc-editor.org/rfc/rfc9110#name-status-codes</a>
-public enum HttpStatus implements ScxHttpStatus {
+public enum HttpStatusCode implements ScxHttpStatusCode {
 
     CONTINUE(100),
     SWITCHING_PROTOCOLS(101),
@@ -54,50 +54,50 @@ public enum HttpStatus implements ScxHttpStatus {
     HTTP_VERSION_NOT_SUPPORTED(505);
 
     /// 存储 code 和 对应枚举的映射
-    private static final HttpStatus[] MAP = initMap();
+    private static final HttpStatusCode[] MAP = initMap();
 
-    private final int code;
+    private final int value;
 
-    HttpStatus(int code) {
-        this.code = code;
+    HttpStatusCode(int value) {
+        this.value = value;
     }
 
-    private static HttpStatus[] initMap() {
-        var m = new HttpStatus[506];
-        var values = HttpStatus.values();
+    private static HttpStatusCode[] initMap() {
+        var m = new HttpStatusCode[506];
+        var values = HttpStatusCode.values();
         for (var v : values) {
-            m[v.code] = v;
+            m[v.value] = v;
         }
         return m;
     }
 
-    /// @param code c
+    /// @param statusCode c
     /// @return 未找到时 抛出异常
-    public static HttpStatus of(int code) {
-        var c = find(code);
+    public static HttpStatusCode of(int statusCode) {
+        var c = find(statusCode);
         if (c == null) {
-            throw new IllegalArgumentException("Invalid HTTP status code: " + code);
+            throw new IllegalArgumentException("Invalid HTTP status code: " + statusCode);
         }
         return c;
     }
 
-    /// @param code c
+    /// @param statusCode c
     /// @return 未找到时 返回 null
-    public static HttpStatus find(int code) {
-        if (code < 0 || code > 505) {
+    public static HttpStatusCode find(int statusCode) {
+        if (statusCode < 0 || statusCode > 505) {
             return null;
         }
-        return MAP[code];
+        return MAP[statusCode];
     }
 
     @Override
-    public int code() {
-        return code;
+    public int value() {
+        return value;
     }
 
     @Override
     public String toString() {
-        return code + "";
+        return value + "";
     }
 
 }

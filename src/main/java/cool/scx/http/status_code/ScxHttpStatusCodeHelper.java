@@ -1,19 +1,19 @@
-package cool.scx.http.status;
+package cool.scx.http.status_code;
 
 import java.util.EnumMap;
 
-import static cool.scx.http.status.HttpStatus.*;
+import static cool.scx.http.status_code.HttpStatusCode.*;
 
-/// ScxHttpStatusHelper
+/// ScxHttpStatusCodeHelper
 ///
 /// @author scx567888
 /// @version 0.0.1
-public final class ScxHttpStatusHelper {
+public final class ScxHttpStatusCodeHelper {
 
-    private static final EnumMap<HttpStatus, String> MAP = initMap();
+    private static final EnumMap<HttpStatusCode, String> MAP = initMap();
 
-    private static EnumMap<HttpStatus, String> initMap() {
-        var m = new EnumMap<HttpStatus, String>(HttpStatus.class);
+    private static EnumMap<HttpStatusCode, String> initMap() {
+        var m = new EnumMap<HttpStatusCode, String>(HttpStatusCode.class);
         m.put(CONTINUE, "Continue");
         m.put(SWITCHING_PROTOCOLS, "Switching Protocols");
         m.put(OK, "OK");
@@ -62,12 +62,12 @@ public final class ScxHttpStatusHelper {
         return m;
     }
 
-    public static String getReasonPhrase(HttpStatus status) {
-        return MAP.get(status);
+    public static String getReasonPhrase(HttpStatusCode statusCode) {
+        return MAP.get(statusCode);
     }
 
-    public static String getReasonPhrase(ScxHttpStatus status, String defaultReasonPhrase) {
-        return status instanceof HttpStatus s ? getReasonPhrase(s) : defaultReasonPhrase;
+    public static String getReasonPhrase(ScxHttpStatusCode statusCode, String defaultReasonPhrase) {
+        return statusCode instanceof HttpStatusCode s ? getReasonPhrase(s) : defaultReasonPhrase;
     }
 
 }

@@ -1,6 +1,6 @@
 package cool.scx.http.exception;
 
-import static cool.scx.http.status.HttpStatus.URI_TOO_LONG;
+import static cool.scx.http.status_code.HttpStatusCode.URI_TOO_LONG;
 
 /// URITooLongException
 ///

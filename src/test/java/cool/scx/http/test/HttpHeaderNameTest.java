@@ -1,11 +1,11 @@
 package cool.scx.http.test;
 
 import cool.scx.common.util.CaseUtils;
-import cool.scx.http.headers.HttpFieldName;
+import cool.scx.http.headers.HttpHeaderName;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class HttpFieldNameTest {
+public class HttpHeaderNameTest {
 
     public static void main(String[] args) {
         test1();
@@ -13,7 +13,7 @@ public class HttpFieldNameTest {
 
     @Test
     public static void test1() {
-        for (var value : HttpFieldName.values()) {
+        for (var value : HttpHeaderName.values()) {
             Assert.assertEquals(value.value().toLowerCase(), CaseUtils.toKebab(value.name()));
         }
     }

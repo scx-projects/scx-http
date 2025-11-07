@@ -6,7 +6,7 @@ import cool.scx.http.headers.ScxHttpHeadersWriteHelper;
 import cool.scx.http.media.MediaWriter;
 import cool.scx.http.sender.BodyAlreadySentException;
 import cool.scx.http.sender.ScxHttpSender;
-import cool.scx.http.status.ScxHttpStatus;
+import cool.scx.http.status_code.ScxHttpStatusCode;
 
 /// ScxHttpServerResponse
 ///
@@ -16,12 +16,12 @@ public interface ScxHttpServerResponse extends ScxHttpSender<Void>, ScxHttpHeade
 
     ScxHttpServerRequest request();
 
-    ScxHttpStatus status();
+    ScxHttpStatusCode statusCode();
 
     @Override
     ScxHttpHeadersWritable headers();
 
-    ScxHttpServerResponse status(ScxHttpStatus code);
+    ScxHttpServerResponse statusCode(ScxHttpStatusCode statusCode);
 
     ScxHttpServerResponse headers(ScxHttpHeaders headers);
 
@@ -32,8 +32,8 @@ public interface ScxHttpServerResponse extends ScxHttpSender<Void>, ScxHttpHeade
 
     //******************** 简化操作 *******************
 
-    default ScxHttpServerResponse status(int code) {
-        return status(ScxHttpStatus.of(code));
+    default ScxHttpServerResponse statusCode(int statusCode) {
+        return statusCode(ScxHttpStatusCode.of(statusCode));
     }
 
 }

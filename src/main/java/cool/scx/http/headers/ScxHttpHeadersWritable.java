@@ -8,7 +8,7 @@ import cool.scx.http.headers.cookie.CookiesWritable;
 import cool.scx.http.media_type.ScxMediaType;
 import cool.scx.http.parameters.ParametersWritable;
 
-import static cool.scx.http.headers.HttpFieldName.*;
+import static cool.scx.http.headers.HttpHeaderName.*;
 
 /// 可写的 Headers 可用于 ServerResponse 和 ClientRequest
 /// 在 Parameters 的基础上实现了一些 方便操作 Http 头协议的方法

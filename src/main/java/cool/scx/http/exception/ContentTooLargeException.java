@@ -1,6 +1,6 @@
 package cool.scx.http.exception;
 
-import static cool.scx.http.status.HttpStatus.CONTENT_TOO_LARGE;
+import static cool.scx.http.status_code.HttpStatusCode.CONTENT_TOO_LARGE;
 
 /// ContentTooLargeException
 ///
