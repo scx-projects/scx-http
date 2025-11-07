@@ -1,11 +1,11 @@
 package cool.scx.http.test;
 
-import cool.scx.http.status.HttpStatus;
-import cool.scx.http.status.ScxHttpStatusHelper;
+import cool.scx.http.status_code.HttpStatusCode;
+import cool.scx.http.status_code.ScxHttpStatusHelper;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-public class StatusTest {
+public class StatusCodeTest {
 
     public static void main(String[] args) {
         test1();
@@ -13,7 +13,7 @@ public class StatusTest {
 
     @Test
     public static void test1() {
-        for (var value : HttpStatus.values()) {
+        for (var value : HttpStatusCode.values()) {
             var reasonPhrase = ScxHttpStatusHelper.getReasonPhrase(value);
             if (reasonPhrase == null) {
                 Assert.fail("reasonPhrase is null");
