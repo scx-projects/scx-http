@@ -13,7 +13,7 @@ import cool.scx.http.parameters.Parameters;
 
 import java.util.List;
 
-import static cool.scx.http.headers.HttpFieldName.*;
+import static cool.scx.http.headers.HttpHeaderName.*;
 import static cool.scx.http.headers.ScxHttpHeadersHelper.parseHeaders;
 
 /// 只读的 Headers 可用于 ServerRequest 和 ClientResponse
