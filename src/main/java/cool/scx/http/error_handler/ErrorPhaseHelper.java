@@ -1,5 +1,9 @@
 package cool.scx.http.error_handler;
 
+/// ErrorPhaseHelper
+///
+/// @author scx567888
+/// @version 0.0.1
 public final class ErrorPhaseHelper {
 
     public static String getErrorPhaseStr(ErrorPhase errorPhase) {

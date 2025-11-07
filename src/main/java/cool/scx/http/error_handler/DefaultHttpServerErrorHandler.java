@@ -21,6 +21,9 @@ import static java.lang.System.getLogger;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 /// 默认错误处理器
+///
+/// @author scx567888
+/// @version 0.0.1
 public class DefaultHttpServerErrorHandler implements ScxHttpServerErrorHandler {
 
     public static final DefaultHttpServerErrorHandler DEFAULT_HTTP_SERVER_ERROR_HANDLER = new DefaultHttpServerErrorHandler(true);
