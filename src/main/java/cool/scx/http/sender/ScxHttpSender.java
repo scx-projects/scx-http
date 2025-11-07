@@ -23,6 +23,10 @@ import java.nio.charset.Charset;
 
 import static cool.scx.http.media.empty.EmptyMediaWriter.EMPTY_MEDIA_WRITER;
 
+/// ScxHttpSender
+///
+/// @author scx567888
+/// @version 0.0.1
 public interface ScxHttpSender<T> {
 
     T send(MediaWriter mediaWriter) throws BodyAlreadySentException, HttpSendException;
