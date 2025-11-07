@@ -8,6 +8,7 @@ import cool.scx.http.media.multi_part.MultiPartPart;
 import cool.scx.http.media.multi_part.MultiPartStream;
 import cool.scx.http.media_type.MediaType;
 import cool.scx.http.media_type.ScxMediaType;
+import cool.scx.io.ByteArrayByteOutput;
 import cool.scx.io.DefaultByteInput;
 import cool.scx.io.ScxIO;
 import cool.scx.io.supplier.ByteArrayByteSupplier;
@@ -117,9 +118,9 @@ public class MultiPartTest {
     private static byte[] createMultiPartBytes(MultiPart multipart) {
         var ss = new MultiPartMediaWriter(multipart);
 
-        var b = new ByteArrayOutputStream();
-        ss.write(ScxIO.outputStreamToByteOutput(b));
-        return b.toByteArray();
+        var b = new ByteArrayByteOutput();
+        ss.write(b);
+        return b.bytes();
     }
 
 }
