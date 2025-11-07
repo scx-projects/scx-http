@@ -3,7 +3,7 @@ package cool.scx.http.media_type;
 import cool.scx.http.parameters.Parameters;
 import cool.scx.http.parameters.ParametersWritable;
 
-/// ScxMediaType
+/// ScxMediaTypeImpl
 ///
 /// @author scx567888
 /// @version 0.0.1

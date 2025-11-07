@@ -4,6 +4,10 @@ import cool.scx.http.parameters.Parameters;
 
 import java.util.regex.Pattern;
 
+/// ScxMediaTypeHelper
+///
+/// @author scx567888
+/// @version 0.0.1
 public class ScxMediaTypeHelper {
 
     public static final Pattern SEMICOLON_PATTERN = Pattern.compile(";\\s*");
