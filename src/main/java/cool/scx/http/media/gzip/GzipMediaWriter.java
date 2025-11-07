@@ -26,6 +26,7 @@ public record GzipMediaWriter(MediaWriter mediaWriter) implements MediaWriter {
 
     @Override
     public void write(ByteOutput byteOutput) throws ScxIOException, AlreadyClosedException {
+        // 这里不能擅自关闭 byteOutput,  因为 真正的关闭流程应该发生在 mediaWriter 中. 当前的 GzipMediaWriter 只是一个包装器
         var gzipByteOutput = ScxIO.gzipByteOutput(byteOutput);
         mediaWriter.write(gzipByteOutput);
     }
