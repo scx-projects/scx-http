@@ -7,9 +7,9 @@ import cool.scx.io.DefaultByteInput;
 import cool.scx.io.exception.AlreadyClosedException;
 import cool.scx.io.exception.ScxIOException;
 import cool.scx.io.supplier.CacheByteSupplier;
-import cool.scx.io.supplier.SpecialCloseByteSupplier;
+import cool.scx.io.supplier.ClosePolicyByteSupplier;
 
-import static cool.scx.io.supplier.SpecialCloseByteSupplier.singleClose;
+import static cool.scx.io.supplier.ClosePolicyByteSupplier.singleClose;
 
 /// CacheHttpBody
 ///
@@ -20,7 +20,7 @@ public class CacheHttpBody implements ScxHttpBody {
     private final ByteInput byteInput;
     private final ScxHttpHeaders headers;
     private final CacheByteSupplier cacheByteSupplier;
-    private final SpecialCloseByteSupplier singleCloseByteSupplier;
+    private final ClosePolicyByteSupplier singleCloseByteSupplier;
 
     public CacheHttpBody(ByteInput byteInput, ScxHttpHeaders headers) {
         this.byteInput = byteInput;

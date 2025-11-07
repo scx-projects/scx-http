@@ -12,7 +12,7 @@ import cool.scx.io.supplier.BoundaryByteSupplier;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import static cool.scx.io.supplier.SpecialCloseByteSupplier.noCloseDrain;
+import static cool.scx.io.supplier.ClosePolicyByteSupplier.noCloseDrain;
 
 /// MultiPartStream
 ///
