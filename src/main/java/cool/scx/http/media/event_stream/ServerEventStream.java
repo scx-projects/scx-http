@@ -11,7 +11,7 @@ import static cool.scx.http.media.event_stream.EventStreamHelper.writeToOutputSt
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class ServerEventStream implements AutoCloseable {
+public final class ServerEventStream implements AutoCloseable {
 
     private final ByteOutput out;
 

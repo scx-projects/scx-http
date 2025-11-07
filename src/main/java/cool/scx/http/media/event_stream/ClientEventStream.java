@@ -10,7 +10,7 @@ import static cool.scx.http.media.event_stream.EventStreamHelper.LF_BYTES;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class ClientEventStream implements AutoCloseable {
+public final class ClientEventStream implements AutoCloseable {
 
     private final ByteInput byteInput;
     private final Charset charset;

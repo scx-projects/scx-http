@@ -10,7 +10,7 @@ import static cool.scx.http.media.string.StringMediaReader.getContentTypeCharset
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class ClientEventStreamMediaReader implements MediaReader<ClientEventStream> {
+public final class ClientEventStreamMediaReader implements MediaReader<ClientEventStream> {
 
     public static final ClientEventStreamMediaReader CLIENT_EVENT_STREAM_MEDIA_READER = new ClientEventStreamMediaReader();
 

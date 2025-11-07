@@ -11,7 +11,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class EventStreamHelper {
+public final class EventStreamHelper {
 
     public static final byte[] LF_BYTES = "\n".getBytes();
 

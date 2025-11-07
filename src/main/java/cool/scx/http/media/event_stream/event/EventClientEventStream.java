@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class EventClientEventStream {
+public final class EventClientEventStream {
 
     private final ClientEventStream eventStream;
     private Consumer<SseEvent> eventHandler;
