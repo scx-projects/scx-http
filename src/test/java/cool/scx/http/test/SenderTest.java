@@ -7,12 +7,8 @@ import cool.scx.http.sender.BodyAlreadySentException;
 import cool.scx.http.sender.HttpSendException;
 import cool.scx.http.sender.ScxHttpSender;
 import cool.scx.io.ByteArrayByteOutput;
-import cool.scx.io.ByteOutput;
-import cool.scx.io.ScxIO;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-
-import java.io.ByteArrayOutputStream;
 
 public class SenderTest {
 
