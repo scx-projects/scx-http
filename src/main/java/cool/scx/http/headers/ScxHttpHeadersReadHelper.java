@@ -6,6 +6,9 @@ import cool.scx.http.headers.cookie.Cookies;
 import cool.scx.http.media_type.ScxMediaType;
 
 /// 这只是一个帮助类 用于简化 header 的读取
+///
+/// @author scx567888
+/// @version 0.0.1
 public interface ScxHttpHeadersReadHelper {
 
     ScxHttpHeaders headers();

@@ -2,6 +2,10 @@ package cool.scx.http.headers.accept;
 
 import static cool.scx.http.media_type.ScxMediaTypeHelper.SEMICOLON_PATTERN;
 
+/// MediaRangeHelper
+///
+/// @author scx567888
+/// @version 0.0.1
 public class MediaRangeHelper {
 
     public static MediaRangeWritable parseMediaRange(String mediaRangeStr) throws IllegalMediaRangeException {

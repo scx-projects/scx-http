@@ -1,6 +1,9 @@
 package cool.scx.http.headers.content_encoding;
 
 /// ContentEncoding
+///
+/// @author scx567888
+/// @version 0.0.1
 public enum ContentEncoding implements ScxContentEncoding {
 
     GZIP("gzip");

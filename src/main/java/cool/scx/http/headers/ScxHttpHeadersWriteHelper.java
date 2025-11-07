@@ -5,6 +5,9 @@ import cool.scx.http.headers.cookie.Cookie;
 import cool.scx.http.media_type.ScxMediaType;
 
 /// 这只是一个帮助类 用于简化 header 的写入
+///
+/// @author scx567888
+/// @version 0.0.1
 @SuppressWarnings("unchecked")
 public interface ScxHttpHeadersWriteHelper<T extends ScxHttpHeadersWriteHelper<T>> extends ScxHttpHeadersReadHelper {
 
