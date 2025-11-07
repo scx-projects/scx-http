@@ -21,7 +21,7 @@ import static cool.scx.http.media_type.MediaType.APPLICATION_XML;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class ObjectMediaReader<T> implements MediaReader<T> {
+public final class ObjectMediaReader<T> implements MediaReader<T> {
 
     private final TypeInfo type;
 
