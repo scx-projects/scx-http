@@ -6,7 +6,7 @@ package cool.scx.http.sender;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class BodyAlreadySentException extends IllegalStateException {
+public final class BodyAlreadySentException extends IllegalStateException {
 
     public BodyAlreadySentException() {
         super("The body has already been sent.");

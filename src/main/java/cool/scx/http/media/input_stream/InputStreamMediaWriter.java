@@ -17,7 +17,7 @@ import java.io.InputStream;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class InputStreamMediaWriter implements MediaWriter {
+public final class InputStreamMediaWriter implements MediaWriter {
 
     private final InputStream inputStream;
     private final boolean autoClose;

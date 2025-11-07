@@ -11,7 +11,7 @@ import static cool.scx.http.media_type.MediaType.MULTIPART_FORM_DATA;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class MultiPartStreamMediaReader implements MediaReader<MultiPartStream> {
+public final class MultiPartStreamMediaReader implements MediaReader<MultiPartStream> {
 
     public static final MultiPartStreamMediaReader MULTI_PART_STREAM_MEDIA_READER = new MultiPartStreamMediaReader();
 

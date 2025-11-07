@@ -12,7 +12,7 @@ import static cool.scx.http.media.string.StringMediaReader.STRING_MEDIA_READER;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class FormParamsMediaReader implements MediaReader<FormParams> {
+public final class FormParamsMediaReader implements MediaReader<FormParams> {
 
     public static final FormParamsMediaReader FORM_PARAMS_MEDIA_READER = new FormParamsMediaReader();
 

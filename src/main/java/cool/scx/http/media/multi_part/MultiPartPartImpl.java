@@ -9,7 +9,7 @@ import cool.scx.io.ByteInput;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class MultiPartPartImpl implements MultiPartPartWritable {
+public final class MultiPartPartImpl implements MultiPartPartWritable {
 
     private ScxHttpHeadersWritable headers;
     private Function0<ByteInput, ?> body;

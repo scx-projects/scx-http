@@ -18,7 +18,7 @@ import java.nio.file.OpenOption;
 ///
 /// @author scx567888
 /// @version 0.0.1
-public class FileMediaReader implements MediaReader<File> {
+public final class FileMediaReader implements MediaReader<File> {
 
     private final File file;
     private final boolean createDirs;
