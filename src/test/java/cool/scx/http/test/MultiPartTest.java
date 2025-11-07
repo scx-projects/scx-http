@@ -55,7 +55,7 @@ public class MultiPartTest {
             MultiPart read = MULTI_PART_STREAM_MEDIA_READER.read(s, ScxHttpHeaders.of().contentType(ScxMediaType.of(MediaType.MULTIPART_FORM_DATA).boundary("wwwwwwwwww")));
 
             for (MultiPartPart multiPartPart : read) {
-
+                // 什么都不做
             }
 
         }
@@ -68,7 +68,7 @@ public class MultiPartTest {
             MultiPart read = MULTI_PART_STREAM_MEDIA_READER.read(s, ScxHttpHeaders.of().contentType(ScxMediaType.of(MediaType.MULTIPART_FORM_DATA).boundary("wwwwwwwwww")));
 
             for (MultiPartPart multiPartPart : read) {
-                //
+                // 什么都不做
             }
 
         }

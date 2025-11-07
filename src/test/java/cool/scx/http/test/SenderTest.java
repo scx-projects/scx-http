@@ -54,7 +54,7 @@ public class SenderTest {
         }
 
         public String getString() {
-            return new String(out.toByteArray());
+            return out.toString();
         }
 
     }
