@@ -6,6 +6,10 @@ import java.nio.charset.Charset;
 
 import static cool.scx.http.media.event_stream.EventStreamHelper.LF_BYTES;
 
+/// ClientEventStream
+///
+/// @author scx567888
+/// @version 0.0.1
 public class ClientEventStream implements AutoCloseable {
 
     private final ByteInput byteInput;

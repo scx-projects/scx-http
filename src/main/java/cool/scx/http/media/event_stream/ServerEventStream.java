@@ -7,6 +7,10 @@ import cool.scx.io.exception.ScxIOException;
 
 import static cool.scx.http.media.event_stream.EventStreamHelper.writeToOutputStream;
 
+/// ServerEventStream
+///
+/// @author scx567888
+/// @version 0.0.1
 public class ServerEventStream implements AutoCloseable {
 
     private final ByteOutput out;
