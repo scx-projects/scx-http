@@ -4,6 +4,7 @@ import cool.scx.common.util.ExceptionUtils;
 import cool.scx.http.ScxHttpServerRequest;
 import cool.scx.http.exception.InternalServerErrorException;
 import cool.scx.http.exception.ScxHttpException;
+import cool.scx.http.exception.ScxHttpExceptionLike;
 import cool.scx.http.headers.accept.Accept;
 import cool.scx.http.media_type.ScxMediaType;
 import cool.scx.http.status_code.ScxHttpStatusCode;
@@ -94,11 +95,27 @@ public class DefaultHttpServerErrorHandler implements ScxHttpServerErrorHandler 
         sendToClient(scxHttpException.statusCode(), info, request);
     }
 
+    public void handleScxHttpExceptionLike(ScxHttpExceptionLike scxHttpException, Throwable throwable, ScxHttpServerRequest request) {
+        String info = null;
+        //1, 这里根据是否开启了开发人员错误页面 进行相应的返回
+        if (useDevelopmentErrorPage) {
+            var cause = throwable.getCause();
+            if (cause == null) {
+                info = throwable.getMessage();
+            } else {
+                info = ExceptionUtils.getStackTraceString(cause);
+            }
+        }
+        sendToClient(scxHttpException.statusCode(), info, request);
+    }
+
     @Override
     public void accept(Throwable throwable, ScxHttpServerRequest request, ErrorPhase errorPhase) {
         // Http 异常无需打印
         if (throwable instanceof ScxHttpException h) {
             this.handleScxHttpException(h, request);
+        } else if (throwable instanceof ScxHttpExceptionLike h) {
+            this.handleScxHttpExceptionLike(h, throwable, request);
         } else {
             // 其余异常包装为 500 异常, 同时需要打印
             LOGGER.log(ERROR, getErrorPhaseStr(errorPhase) + " 发生异常 !!!", throwable);
