@@ -35,8 +35,8 @@ public final class FileMediaWriter implements MediaWriter {
         this.length = length;
         try {
             this.byteInput = ScxIO.createByteInput(file, offset, length);
-        } catch (IOException e) {
-            throw new HttpSendException("读取 file 时发生异常 !!!", e);
+        } catch (ScxIOException e) {
+            throw new HttpSendException("读取 file 时发生异常 !!!", e.getCause());
         }
     }
 
