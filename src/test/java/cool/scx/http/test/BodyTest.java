@@ -1,11 +1,15 @@
 package cool.scx.http.test;
 
 import cool.scx.http.body.BodyAlreadyConsumedException;
-import cool.scx.http.body.DefaultHttpBody;
+import cool.scx.http.body.BodyReadException;
 import cool.scx.http.body.ScxHttpBody;
 import cool.scx.http.headers.ScxHttpHeaders;
 import cool.scx.http.headers.content_encoding.ContentEncoding;
+import cool.scx.http.media.MediaReader;
+import cool.scx.io.ByteInput;
 import cool.scx.io.ScxIO;
+import cool.scx.io.exception.AlreadyClosedException;
+import cool.scx.io.exception.ScxIOException;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -28,7 +32,7 @@ public class BodyTest {
         var rawData = ScxIO.createByteInput("123456789abcdefg".getBytes());
         var rawHeader = ScxHttpHeaders.of();
 
-        var s = new DefaultHttpBody(rawData, rawHeader);
+        var s = new TestHttpBody(rawData, rawHeader);
 
         var string = s.asString();
 
@@ -45,7 +49,7 @@ public class BodyTest {
         var rawData = ScxIO.createByteInput("123456789abcdefg".getBytes());
         var rawHeader = ScxHttpHeaders.of();
 
-        ScxHttpBody s = new DefaultHttpBody(rawData, rawHeader);
+        ScxHttpBody s = new TestHttpBody(rawData, rawHeader);
         // 测试缓存
         s = s.asCacheBody();
         var string1 = s.asString();
@@ -65,7 +69,7 @@ public class BodyTest {
         var rawData = ScxIO.createByteInput(convertToGzip("123456789abcdefg".getBytes()));
         var rawHeader = ScxHttpHeaders.of().contentEncoding(ContentEncoding.GZIP);
 
-        ScxHttpBody a = new DefaultHttpBody(rawData, rawHeader);
+        ScxHttpBody a = new TestHttpBody(rawData, rawHeader);
         // 测试 gzip
         var s = a.asGzipBody();
         var string = s.asString();
@@ -84,7 +88,7 @@ public class BodyTest {
         var rawData = ScxIO.createByteInput(convertToGzip("123456789abcdefg".getBytes()));
         var rawHeader = ScxHttpHeaders.of().contentEncoding(ContentEncoding.GZIP);
 
-        ScxHttpBody a = new DefaultHttpBody(rawData, rawHeader);
+        ScxHttpBody a = new TestHttpBody(rawData, rawHeader);
         // 测试缓存+gzip
         var s = a.asGzipBody().asCacheBody();
         var string1 = s.asString();
@@ -106,6 +110,21 @@ public class BodyTest {
             s.transferTo(g);
         }
         return o.toByteArray();
+    }
+
+    public record TestHttpBody(ByteInput byteInput, ScxHttpHeaders headers) implements ScxHttpBody {
+
+        @Override
+        public <T> T as(MediaReader<T> mediaReader) throws BodyAlreadyConsumedException, BodyReadException {
+            try {
+                return mediaReader.read(byteInput, headers);
+            } catch (ScxIOException e) {
+                throw new BodyReadException(e);
+            } catch (AlreadyClosedException e) {
+                throw new BodyAlreadyConsumedException();
+            }
+        }
+
     }
 
 }
