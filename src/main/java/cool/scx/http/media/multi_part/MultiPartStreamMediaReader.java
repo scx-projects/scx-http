@@ -15,8 +15,15 @@ public final class MultiPartStreamMediaReader implements MediaReader<MultiPartSt
 
     public static final MultiPartStreamMediaReader MULTI_PART_STREAM_MEDIA_READER = new MultiPartStreamMediaReader();
 
-    private MultiPartStreamMediaReader() {
+    /// 最大 part 头长度, 防止恶意攻击
+    private final int maxPartHeaderSize;
 
+    public MultiPartStreamMediaReader() {
+        this.maxPartHeaderSize = 1024 * 128; // 默认 128 KB
+    }
+
+    public MultiPartStreamMediaReader(int maxPartHeaderSize) {
+        this.maxPartHeaderSize = maxPartHeaderSize;
     }
 
     public static String checkedBoundary(ScxHttpHeaders headers) {
@@ -41,7 +48,7 @@ public final class MultiPartStreamMediaReader implements MediaReader<MultiPartSt
     @Override
     public MultiPartStream read(ByteInput byteInput, ScxHttpHeaders headers) {
         var boundary = checkedBoundary(headers);
-        return new MultiPartStream(byteInput, boundary);
+        return new MultiPartStream(byteInput, boundary, this.maxPartHeaderSize);
     }
 
 }
