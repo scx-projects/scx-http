@@ -1,6 +1,8 @@
 package cool.scx.http.media.event_stream;
 
 import cool.scx.io.ByteInput;
+import cool.scx.io.exception.NoMatchFoundException;
+import cool.scx.io.exception.NoMoreDataException;
 
 import java.nio.charset.Charset;
 
@@ -27,7 +29,15 @@ public final class ClientEventStream implements AutoCloseable {
         // 解析事件
         while (true) {
 
-            var bytes = byteInput.readUntil(LF_BYTES);
+            // todo 这里应该细化处理
+            byte[] bytes = null;
+            try {
+                bytes = byteInput.readUntil(LF_BYTES);
+            } catch (NoMatchFoundException e) {
+                throw new RuntimeException(e);
+            } catch (NoMoreDataException e) {
+                throw new RuntimeException(e);
+            }
 
             var line = new String(bytes, charset);
 
