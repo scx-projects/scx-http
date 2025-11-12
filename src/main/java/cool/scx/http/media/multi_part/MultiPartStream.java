@@ -5,6 +5,8 @@ import cool.scx.http.headers.ScxHttpHeadersWritable;
 import cool.scx.io.ByteInput;
 import cool.scx.io.DefaultByteInput;
 import cool.scx.io.exception.AlreadyClosedException;
+import cool.scx.io.exception.NoMatchFoundException;
+import cool.scx.io.exception.NoMoreDataException;
 import cool.scx.io.exception.ScxIOException;
 import cool.scx.io.indexer.KMPByteIndexer;
 import cool.scx.io.supplier.BoundaryByteSupplier;
@@ -21,26 +23,37 @@ import static cool.scx.io.supplier.ClosePolicyByteSupplier.noCloseDrain;
 public final class MultiPartStream implements MultiPart, Iterator<MultiPartPart>, AutoCloseable {
 
     private static final byte[] CRLF_CRLF_BYTES = "\r\n\r\n".getBytes();
-    private final String boundary; // xxx
-    private final byte[] boundaryBytes; // --xxx
-    private final byte[] boundaryStartBytes; // \r\b--xxx
+
     private final ByteInput byteInput;
+    private final String boundary; // xxx
+    private final int maxPartHeaderSize;
+
+    private final byte[] boundaryBytes; // --xxx
+    private final byte[] boundaryEndBytes; // \r\b--xxx
     private MultiPartPart lastPart;
 
-    public MultiPartStream(ByteInput byteInput, String boundary) {
-        this.boundary = boundary;
-        this.boundaryBytes = ("--" + boundary).getBytes();
-        this.boundaryStartBytes = ("\r\n--" + boundary).getBytes();
+    public MultiPartStream(ByteInput byteInput, String boundary, int maxPartHeaderSize) {
         this.byteInput = byteInput;
+        this.boundary = boundary;
+        this.maxPartHeaderSize = maxPartHeaderSize;
+
+        this.boundaryBytes = ("--" + boundary).getBytes();
+        this.boundaryEndBytes = ("\r\n--" + boundary).getBytes();
         this.lastPart = null;
     }
 
-    public static void consumeByteInput(ByteInput byteInput) {
-        // 这里我们只要 close 就会消耗掉底层
-        try (byteInput) {
-
-        } catch (AlreadyClosedException | ScxIOException e) {
+    public void consumeLastPart(MultiPartPart lastPart) {
+        // 这里我们只要 close 就会消耗掉底层 (原因参见 readContent)
+        try {
+            lastPart.byteInput().close();
+        } catch (AlreadyClosedException e) {
             // 忽略
+        }
+        // lastPart.byteInput() 中并不会消耗 最后的 \r\n, 但是接下来的判断我们也不需要 所以这里 跳过最后的 \r\n
+        try {
+            byteInput.skipFully(2);
+        } catch (NoMoreDataException e) {
+            throw new MultiPartParseException("Unexpected end of stream while skipping trailing CRLF after previous part");
         }
     }
 
@@ -49,7 +62,14 @@ public final class MultiPartStream implements MultiPart, Iterator<MultiPartPart>
         // head /r/n
         // /r/n
         // content
-        var headersBytes = byteInput.readUntil(CRLF_CRLF_BYTES);
+        byte[] headersBytes;
+        try {
+            headersBytes = byteInput.readUntil(CRLF_CRLF_BYTES, maxPartHeaderSize);
+        } catch (NoMatchFoundException e) {
+            throw new MultiPartParseException("Multipart header too large");
+        } catch (NoMoreDataException e) {
+            throw new MultiPartParseException("Unexpected end of stream while reading multipart headers");
+        }
         var headersStr = new String(headersBytes);
         return ScxHttpHeaders.ofStrict(headersStr);// 使用严格模式解析
     }
@@ -58,7 +78,7 @@ public final class MultiPartStream implements MultiPart, Iterator<MultiPartPart>
         // 内容 的终结符是 \r\n--boundary
         // 所以我们创建一个以 \r\n--boundary 结尾的分割符 输入流
         // 1, 创建一个 可以一直读取到 分隔符的 字节 提供器
-        var boundaryByteSupplier = new BoundaryByteSupplier(byteInput, new KMPByteIndexer(boundaryStartBytes), true);
+        var boundaryByteSupplier = new BoundaryByteSupplier(byteInput, new KMPByteIndexer(boundaryEndBytes), true);
         // 2, 设置为 不关闭底层 + close 时排空.
         return new DefaultByteInput(noCloseDrain(boundaryByteSupplier));
     }
@@ -77,33 +97,36 @@ public final class MultiPartStream implements MultiPart, Iterator<MultiPartPart>
     public boolean hasNext() {
         // 用户可能并没有消耗掉上一个分块就调用了 hasNext 这里我们替他消费
         if (lastPart != null) {
-            //消费掉上一个分块的内容
-            consumeByteInput(lastPart.byteInput());
-            // inputStream 中并不会消耗 最后的 \r\n, 但是接下来的判断我们也不需要 所以这里 跳过最后的 \r\n
-            byteInput.skipFully(2);
+            // 消费掉上一个分块的内容
+            consumeLastPart(lastPart);
             //置空 防止重复消费
             lastPart = null;
         }
 
         // 下面的操作不会移动指针 所以我们可以 重复调用 hasNext
         // 向后查看
-        var peek = byteInput.peekFully(boundaryBytes.length + 2);
+        byte[] startBytes;
+        try {
+            startBytes = byteInput.peekFully(boundaryBytes.length + 2);
+        } catch (NoMoreDataException e) {
+            throw new MultiPartParseException("Malformed multipart: boundary peek too short");
+        }
 
         // 这种情况只可能发生在流已经提前结束了
-        if (peek.length != boundaryBytes.length + 2) {
-            throw new RuntimeException("Malformed multipart: boundary peek too short");
+        if (startBytes.length != boundaryBytes.length + 2) {
+            throw new MultiPartParseException("Malformed multipart: boundary peek too short");
         }
 
         // 1. 先判断 peek 开头是否和 boundaryBytes 匹配
         for (int i = 0; i < boundaryBytes.length; i = i + 1) {
-            if (peek[i] != boundaryBytes[i]) {
-                throw new RuntimeException("Malformed multipart: boundary not matched");
+            if (startBytes[i] != boundaryBytes[i]) {
+                throw new MultiPartParseException("Malformed multipart: boundary not matched");
             }
         }
 
         // 2. boundary 后两个字节判断
-        byte a = peek[peek.length - 2];
-        byte b = peek[peek.length - 1];
+        byte a = startBytes[startBytes.length - 2];
+        byte b = startBytes[startBytes.length - 1];
 
         if (a == '-' && b == '-') {
             // 遇到 --boundary-- , 整个 multipart 结束
@@ -113,7 +136,7 @@ public final class MultiPartStream implements MultiPart, Iterator<MultiPartPart>
             return true;
         } else {
             //其他字符那就只能抛异常了
-            throw new RuntimeException("Malformed multipart: invalid boundary ending");
+            throw new MultiPartParseException("Malformed multipart: invalid boundary ending");
         }
 
     }
@@ -125,7 +148,11 @@ public final class MultiPartStream implements MultiPart, Iterator<MultiPartPart>
         }
 
         // 跳过起始的 --boundary\r\n
-        byteInput.skipFully(boundaryBytes.length + 2);
+        try {
+            byteInput.skipFully(boundaryBytes.length + 2);
+        } catch (NoMoreDataException e) {
+            throw new MultiPartParseException("Failed to skip boundary: unexpected end of stream");
+        }
 
         var part = new MultiPartPartImpl();
 
