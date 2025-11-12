@@ -13,14 +13,11 @@ import static cool.scx.http.media_type.MediaType.MULTIPART_FORM_DATA;
 /// @version 0.0.1
 public final class MultiPartStreamMediaReader implements MediaReader<MultiPartStream> {
 
-    public static final MultiPartStreamMediaReader MULTI_PART_STREAM_MEDIA_READER = new MultiPartStreamMediaReader();
+    /// 默认 128 KB
+    public static final MultiPartStreamMediaReader MULTI_PART_STREAM_MEDIA_READER = new MultiPartStreamMediaReader(1024 * 128);
 
     /// 最大 part 头长度, 防止恶意攻击
     private final int maxPartHeaderSize;
-
-    public MultiPartStreamMediaReader() {
-        this.maxPartHeaderSize = 1024 * 128; // 默认 128 KB
-    }
 
     public MultiPartStreamMediaReader(int maxPartHeaderSize) {
         this.maxPartHeaderSize = maxPartHeaderSize;
