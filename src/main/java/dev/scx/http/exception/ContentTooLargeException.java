@@ -1,0 +1,27 @@
+package dev.scx.http.exception;
+
+import static dev.scx.http.status_code.HttpStatusCode.CONTENT_TOO_LARGE;
+
+/// ContentTooLargeException
+///
+/// @author scx567888
+/// @version 0.0.1
+public class ContentTooLargeException extends HttpException {
+
+    public ContentTooLargeException() {
+        super(CONTENT_TOO_LARGE);
+    }
+
+    public ContentTooLargeException(String message) {
+        super(CONTENT_TOO_LARGE, message);
+    }
+
+    public ContentTooLargeException(Throwable cause) {
+        super(CONTENT_TOO_LARGE, cause);
+    }
+
+    public ContentTooLargeException(String message, Throwable cause) {
+        super(CONTENT_TOO_LARGE, message, cause);
+    }
+
+}
