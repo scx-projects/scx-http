@@ -8,12 +8,11 @@ import dev.scx.http.media_type.ScxMediaType;
 import dev.scx.http.status_code.ScxHttpStatusCode;
 import dev.scx.serialize.ScxSerialize;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import java.lang.System.Logger;
 import java.util.Map;
 
-import static dev.scx.http.error_handler.ErrorPhaseHelper.getErrorPhaseStr;
+import static dev.scx.http.error_handler.ErrorHandlerHelper.getErrorPhaseString;
+import static dev.scx.http.error_handler.ErrorHandlerHelper.getStackTraceString;
 import static dev.scx.http.media_type.MediaType.APPLICATION_JSON;
 import static dev.scx.http.media_type.MediaType.TEXT_HTML;
 import static dev.scx.http.status_code.ScxHttpStatusCodeHelper.getReasonPhrase;
@@ -51,13 +50,6 @@ public class DefaultHttpServerErrorHandler implements ScxHttpServerErrorHandler 
 
     public DefaultHttpServerErrorHandler(boolean useDevelopmentErrorPage) {
         this.useDevelopmentErrorPage = useDevelopmentErrorPage;
-    }
-
-    /// 获取 jdk 内部默认实现的堆栈跟踪字符串
-    public static String getStackTraceString(Throwable throwable) {
-        var stringWriter = new StringWriter();
-        throwable.printStackTrace(new PrintWriter(stringWriter));
-        return stringWriter.getBuffer().toString();
     }
 
     public static void sendToClient(ScxHttpStatusCode statusCode, String info, ScxHttpServerRequest request) {
@@ -109,7 +101,7 @@ public class DefaultHttpServerErrorHandler implements ScxHttpServerErrorHandler 
             this.handleScxHttpException(h, request);
         } else {
             // 其余异常包装为 500 异常, 同时需要打印
-            LOGGER.log(ERROR, getErrorPhaseStr(errorPhase) + " 发生异常 !!!", throwable);
+            LOGGER.log(ERROR, getErrorPhaseString(errorPhase) + " 发生异常 !!!", throwable);
             this.handleScxHttpException(new InternalServerErrorException(throwable), request);
         }
     }
