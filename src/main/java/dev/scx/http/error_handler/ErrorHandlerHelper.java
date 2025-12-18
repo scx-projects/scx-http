@@ -9,7 +9,7 @@ import java.io.StringWriter;
 /// @version 0.0.1
 public final class ErrorHandlerHelper {
 
-    public static String getErrorPhaseStr(ErrorPhase errorPhase) {
+    public static String getErrorPhaseString(ErrorPhase errorPhase) {
         return switch (errorPhase) {
             case SYSTEM -> "系统处理器";
             case USER -> "用户处理器";

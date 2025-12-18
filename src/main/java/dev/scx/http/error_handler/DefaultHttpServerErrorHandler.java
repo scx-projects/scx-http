@@ -11,7 +11,7 @@ import dev.scx.serialize.ScxSerialize;
 import java.lang.System.Logger;
 import java.util.Map;
 
-import static dev.scx.http.error_handler.ErrorHandlerHelper.getErrorPhaseStr;
+import static dev.scx.http.error_handler.ErrorHandlerHelper.getErrorPhaseString;
 import static dev.scx.http.error_handler.ErrorHandlerHelper.getStackTraceString;
 import static dev.scx.http.media_type.MediaType.APPLICATION_JSON;
 import static dev.scx.http.media_type.MediaType.TEXT_HTML;
@@ -101,7 +101,7 @@ public class DefaultHttpServerErrorHandler implements ScxHttpServerErrorHandler 
             this.handleScxHttpException(h, request);
         } else {
             // 其余异常包装为 500 异常, 同时需要打印
-            LOGGER.log(ERROR, getErrorPhaseStr(errorPhase) + " 发生异常 !!!", throwable);
+            LOGGER.log(ERROR, getErrorPhaseString(errorPhase) + " 发生异常 !!!", throwable);
             this.handleScxHttpException(new InternalServerErrorException(throwable), request);
         }
     }
