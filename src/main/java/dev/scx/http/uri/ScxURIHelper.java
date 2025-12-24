@@ -107,9 +107,4 @@ public final class ScxURIHelper {
         return sb.toString();
     }
 
-    public static ScxURIWritable decodeAuthority(String authority) {
-        var u = URI.create("scx://" + authority);
-        return new ScxURIImpl().host(u.getHost()).port(u.getPort() == -1 ? null : u.getPort());
-    }
-
 }
