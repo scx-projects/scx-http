@@ -3,7 +3,6 @@ package dev.scx.http.uri;
 import dev.scx.http.parameters.Parameters;
 import dev.scx.http.parameters.ParametersWritable;
 
-import java.net.URI;
 import java.util.ArrayList;
 
 import static dev.scx.http.uri.URIEncoder.encodeURIComponent;

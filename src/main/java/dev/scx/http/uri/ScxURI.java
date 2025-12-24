@@ -29,7 +29,7 @@ public interface ScxURI {
     /// ```java
     /// ScxURI.of("http://xxxx.com/路径?a=空 格");
     /// // 内部会先编码为 http://xxxx.com/%E8%B7%AF%E5%BE%84?a=%E7%A9%BA+%E6%A0%BC
-    ///```
+    /// ```
     ///
     /// @param rawStr 原始未编码的 URI 字符串
     /// @return 编码后解析得到的 ScxURI
@@ -45,7 +45,7 @@ public interface ScxURI {
     /// 示例:
     /// ```java
     /// ScxURI.ofEncoded("https://xxxx.com/%E8%B7%AF%E5%BE%84?a=%E7%A9%BA+%E6%A0%BC");
-    ///```
+    /// ```
     ///
     /// @param encodedStr 已编码的 URI 字符串
     /// @return 解析得到的 ScxURI
