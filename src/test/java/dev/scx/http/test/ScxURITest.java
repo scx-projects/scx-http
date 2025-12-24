@@ -12,6 +12,7 @@ public class ScxURITest {
     public static void main(String[] args) {
         test1();
         test2();
+        test3();
     }
 
     @Test
@@ -44,6 +45,13 @@ public class ScxURITest {
             var encode = uri.encode(true);
             assertEquals(encode, string);
         }
+    }
+
+    @Test
+    public static void test3() {
+        var oldURI = ScxURI.of().path("/abc").addQuery("na$&me😏=+ %nnn", "a‍🌵= %&%&+b").toURI();
+        var newURI = ScxURI.of(oldURI);
+        assertEquals(newURI.getQuery("na$&me😏=+ %nnn"), "a‍🌵= %&%&+b");
     }
 
 }
