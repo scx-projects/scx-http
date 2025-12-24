@@ -2,25 +2,22 @@ package dev.scx.http.exception;
 
 import dev.scx.http.status_code.ScxHttpStatusCode;
 
-/// HttpException
-/// 这是一个基于 [ScxHttpStatusCode] 的运行时异常类, 用于表示 HTTP 请求处理过程中的异常情况.
+///  HttpException
 ///
-/// 该异常旨在处理 HTTP 规范中 4xx（客户端错误）和 5xx（服务器错误）序列的状态码, 表示请求失败的各种可能原因.
-/// 通过 [ScxHttpStatusCode] 提供了详细的状态码和描述信息, 使异常的语义更加清晰.
+///  这是 [ScxHttpException] 的一个便捷默认实现, 用于快速抛出带状态码的异常.
 ///
-/// ### 注意:
+///  核心说明:
+///  - 本类只是辅助类, 目的是简化开发者使用接口的流程.
+///  - 真正的核心是 [ScxHttpException] 接口, 任何异常只要实现该接口 就可以被框架识别为 HTTP 响应异常.
 ///
-///   - 200 系列状态码（表示请求成功）或其他非异常状态码通常不应使用此类来表示, 因为它们不属于异常的范畴.
-///
-/// ### 适用场景:
-///
-///   - 在 HTTP 请求处理失败时, 抛出此异常以便调用方捕获并作出相应处理.
-///   - 结合 [ScxHttpStatusCode] 使用, 可以快速标识具体的错误类型并生成标准化的响应.
+///  注意:
+///  - 使用此类可直接指定 HTTP 状态码和可选的错误信息.
+///  - 对于更复杂或同时具有多种语义的异常, 仍然建议自定义异常类并实现接口.
 ///
 /// ### 使用示例:
 /// ```java
 /// throw new HttpException(HttpStatusCode.NOT_FOUND, "Requested resource not found");
-///```
+/// ```
 ///
 /// @author scx567888
 /// @version 0.0.1

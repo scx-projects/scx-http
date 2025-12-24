@@ -3,8 +3,6 @@ package dev.scx.http.uri;
 import dev.scx.http.parameters.Parameters;
 import dev.scx.http.parameters.ParametersWritable;
 
-import static dev.scx.http.uri.ScxURIHelper.decodeQuery;
-
 /// ScxURIWritable
 ///
 /// @author scx567888
@@ -25,10 +23,6 @@ public interface ScxURIWritable extends ScxURI {
     ScxURIWritable query(Parameters<String, String> query);
 
     ScxURIWritable fragment(String fragment);
-
-    default ScxURIWritable query(String queryString) {
-        return query(decodeQuery(queryString));
-    }
 
     default ScxURIWritable setQuery(String name, String... value) {
         query().set(name, value);
