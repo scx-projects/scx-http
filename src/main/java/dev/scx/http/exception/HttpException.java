@@ -15,9 +15,9 @@ import dev.scx.http.status_code.ScxHttpStatusCode;
 ///  - 对于更复杂或同时具有多种语义的异常, 仍然建议自定义异常类并实现接口.
 ///
 /// ### 使用示例:
-///```java
-///throw new HttpException(HttpStatusCode.NOT_FOUND, "Requested resource not found");
-///```
+/// ```java
+/// throw new HttpException(HttpStatusCode.NOT_FOUND, "Requested resource not found");
+/// ```
 ///
 /// @author scx567888
 /// @version 0.0.1

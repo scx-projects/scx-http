@@ -19,16 +19,16 @@ import dev.scx.http.status_code.ScxHttpStatusCode;
 ///
 /// ### 使用示例:
 ///
-///```java
-///public class NotFoundException extends RuntimeException implements ScxHttpException {
+/// ```java
+/// public class NotFoundException extends RuntimeException implements ScxHttpException {
 ///
-///    @Override
-///    public ScxHttpStatusCode statusCode() {
-///        return HttpStatusCode.NOT_FOUND;
-///    }
+///     @Override
+///     public ScxHttpStatusCode statusCode() {
+///         return HttpStatusCode.NOT_FOUND;
+///     }
 ///
-///}
-///```
+/// }
+/// ```
 ///
 /// @author scx567888
 /// @version 0.0.1
