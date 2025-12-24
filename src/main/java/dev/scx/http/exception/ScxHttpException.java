@@ -19,7 +19,7 @@ import dev.scx.http.status_code.ScxHttpStatusCode;
 ///
 /// ### 使用示例:
 ///
-/// ```java
+///```java
 ///public class NotFoundException extends RuntimeException implements ScxHttpException {
 ///
 ///    @Override
