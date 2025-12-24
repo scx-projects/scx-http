@@ -29,6 +29,7 @@ import dev.scx.http.status_code.ScxHttpStatusCode;
 ///
 ///}
 ///```
+///
 /// @author scx567888
 /// @version 0.0.1
 public interface ScxHttpException {
