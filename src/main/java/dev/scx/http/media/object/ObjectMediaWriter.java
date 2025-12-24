@@ -11,7 +11,7 @@ import dev.scx.io.exception.ScxIOException;
 import dev.scx.object.ObjectNodeConvertException;
 import dev.scx.serialize.ScxSerialize;
 
-import static dev.scx.http.media.node.NodeHelper.trySetContentType;
+import static dev.scx.http.media.node.NodeMediaWriter.trySetContentType;
 import static dev.scx.http.media_type.MediaType.APPLICATION_JSON;
 import static dev.scx.http.media_type.MediaType.APPLICATION_XML;
 import static java.nio.charset.StandardCharsets.UTF_8;
