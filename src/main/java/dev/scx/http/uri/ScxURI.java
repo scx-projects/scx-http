@@ -4,6 +4,7 @@ import dev.scx.http.parameters.Parameters;
 
 import java.net.URI;
 
+import static dev.scx.http.uri.ScxURIHelper.decodeQuery;
 import static dev.scx.http.uri.URIEncoder.encodeURI;
 
 /// ScxURI 是对 URI 的抽象 , 提供了更直观、灵活的操作方式.
@@ -63,7 +64,7 @@ public interface ScxURI {
                 .host(u.getHost())
                 .port(u.getPort() == -1 ? null : u.getPort())
                 .path(u.getPath())
-                .query(u.getQuery())
+                .query(decodeQuery(u.getRawQuery()))
                 .fragment(u.getFragment());
     }
 
