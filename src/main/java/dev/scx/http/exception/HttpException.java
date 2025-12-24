@@ -4,11 +4,11 @@ import dev.scx.http.status_code.ScxHttpStatusCode;
 
 ///  HttpException
 ///
-///  这是 [ScxHttpException] 的一个便捷默认实现, 用于快速抛出带状态码的异常。
+///  这是 [ScxHttpException] 的一个便捷默认实现, 用于快速抛出带状态码的异常.
 ///
 ///  核心说明:
 ///  - 本类只是辅助类, 目的是简化开发者使用接口的流程.
-///  - 真正的核心是 [ScxHttpException] 接口，任何异常只要实现该接口 就可以被框架识别为 HTTP 响应异常.
+///  - 真正的核心是 [ScxHttpException] 接口, 任何异常只要实现该接口 就可以被框架识别为 HTTP 响应异常.
 ///
 ///  注意:
 ///  - 使用此类可直接指定 HTTP 状态码和可选的错误信息.

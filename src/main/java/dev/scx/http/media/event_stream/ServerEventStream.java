@@ -38,7 +38,7 @@ public final class ServerEventStream implements AutoCloseable {
         // 使用 StringBuilder 拼接事件内容
         var sb = new StringBuilder();
 
-        // 可选评论（如果有的话）
+        // 可选评论 (如果有的话)
         if (comment != null) {
             var c = getData(comment);
             for (var s : c) {
@@ -69,7 +69,7 @@ public final class ServerEventStream implements AutoCloseable {
             }
         }
 
-        // 事件结束, 追加空行（用于分隔事件）
+        // 事件结束, 追加空行 (用于分隔事件)
         sb.append("\n");
 
         // 写入输出流

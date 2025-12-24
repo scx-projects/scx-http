@@ -7,9 +7,9 @@ import java.net.URI;
 import static dev.scx.http.uri.ScxURIHelper.decodeQuery;
 import static dev.scx.http.uri.URIEncoder.encodeURI;
 
-/// ScxURI 是对 URI 的抽象 , 提供了更直观、灵活的操作方式.
+/// ScxURI 是对 URI 的抽象 , 提供了更直观, 灵活的操作方式.
 ///
-/// 该接口强调 "原始未编码" 值的使用, 所有 URI 组成部分（如 scheme、host、path、query 等）在内部均以 **未编码的原始字符串** 形式存储
+/// 该接口强调 "原始未编码" 值的使用, 所有 URI 组成部分 (如 scheme, host, path, query 等) 在内部均以 **未编码的原始字符串** 形式存储
 ///
 /// @author scx567888
 /// @version 0.0.1
@@ -22,7 +22,7 @@ public interface ScxURI {
 
     /// 从一个原始的 URI 字符串创建 URI 实例.
     ///
-    /// 此方法适用于传入的是未经 URI 编码的原始字符串（如直接从用户输入中获取）,
+    /// 此方法适用于传入的是未经 URI 编码的原始字符串 (如直接从用户输入中获取),
     /// 内部会自动对其进行 URI 编码后再构造 ScxURI 实例.
     ///
     ///
