@@ -24,7 +24,7 @@ import dev.scx.http.status_code.ScxHttpStatusCode;
 ///
 ///    @Override
 ///    public ScxHttpStatusCode statusCode() {
-///        return ScxHttpStatusCode.NOT_FOUND;
+///        return HttpStatusCode.NOT_FOUND;
 ///    }
 ///
 ///}
