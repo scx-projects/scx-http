@@ -3,9 +3,11 @@ package dev.scx.http.uri;
 import dev.scx.http.parameters.Parameters;
 import dev.scx.http.parameters.ParametersWritable;
 
+import java.net.URLDecoder;
 import java.util.ArrayList;
 
 import static dev.scx.http.uri.URIEncoder.encodeURIComponent;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 /// ScxURIHelper
 ///
@@ -13,16 +15,22 @@ import static dev.scx.http.uri.URIEncoder.encodeURIComponent;
 /// @version 0.0.1
 public final class ScxURIHelper {
 
-    public static ParametersWritable<String, String> decodeQuery(String value) {
+    /// 注意参数是 编码后的 rawQuery
+    public static ParametersWritable<String, String> decodeQuery(String rawQuery) {
         ParametersWritable<String, String> query = Parameters.of();
-        if (value == null) {
+        if (rawQuery == null) {
             return query;
         }
-        var split = value.split("&");
-        for (var s : split) {
-            split = s.split("=", 2);
+        var parts = rawQuery.split("&");
+        for (var s : parts) {
+            var split = s.split("=", 2);
             if (split.length == 2) {
-                query.add(split[0], split[1]);
+                var rawKey = split[0];
+                var rawValue = split[1];
+                // 解码
+                var key = URLDecoder.decode(rawKey, UTF_8);
+                var value = URLDecoder.decode(rawValue, UTF_8);
+                query.add(key, value);
             }
         }
         return query;
