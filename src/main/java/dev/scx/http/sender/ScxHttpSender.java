@@ -15,6 +15,8 @@ import dev.scx.http.media.node.NodeMediaWriter;
 import dev.scx.http.media.object.ObjectMediaWriter;
 import dev.scx.http.media.string.StringMediaWriter;
 import dev.scx.io.ByteInput;
+import dev.scx.io.exception.AlreadyClosedException;
+import dev.scx.io.exception.ScxIOException;
 import dev.scx.node.Node;
 
 import java.io.File;
@@ -29,62 +31,62 @@ import static dev.scx.http.media.empty.EmptyMediaWriter.EMPTY_MEDIA_WRITER;
 /// @version 0.0.1
 public interface ScxHttpSender<T> {
 
-    T send(MediaWriter mediaWriter) throws IllegalSenderStateException, HttpSendException;
+    T send(MediaWriter mediaWriter) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException;
 
     ScxHttpSenderStatus senderStatus();
 
     //******************** send 操作 *******************
 
-    default T send() throws IllegalSenderStateException, HttpSendException {
+    default T send() throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(EMPTY_MEDIA_WRITER);
     }
 
-    default T send(ByteInput byteInput) throws IllegalSenderStateException, HttpSendException {
+    default T send(ByteInput byteInput) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new ByteInputMediaWriter(byteInput));
     }
 
-    default T send(InputStream inputStream) throws IllegalSenderStateException, HttpSendException {
+    default T send(InputStream inputStream) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new InputStreamMediaWriter(inputStream));
     }
 
-    default T send(byte[] bytes) throws IllegalSenderStateException, HttpSendException {
+    default T send(byte[] bytes) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new ByteArrayMediaWriter(bytes));
     }
 
-    default T send(String str) throws IllegalSenderStateException, HttpSendException {
+    default T send(String str) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new StringMediaWriter(str));
     }
 
-    default T send(String str, Charset charset) throws IllegalSenderStateException, HttpSendException {
+    default T send(String str, Charset charset) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new StringMediaWriter(str, charset));
     }
 
-    default T send(File file) throws IllegalSenderStateException, HttpSendException {
+    default T send(File file) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new FileMediaWriter(file));
     }
 
-    default T send(File file, long offset, long length) throws IllegalSenderStateException, HttpSendException {
+    default T send(File file, long offset, long length) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new FileMediaWriter(file, offset, length));
     }
 
-    default T send(FormParams formParams) throws IllegalSenderStateException, HttpSendException {
+    default T send(FormParams formParams) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new FormParamsMediaWriter(formParams));
     }
 
-    default T send(MultiPart multiPart) throws IllegalSenderStateException, HttpSendException {
+    default T send(MultiPart multiPart) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new MultiPartMediaWriter(multiPart));
     }
 
-    default T send(Node node) throws IllegalSenderStateException, HttpSendException {
+    default T send(Node node) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new NodeMediaWriter(node));
     }
 
-    default T send(Object object) throws IllegalSenderStateException, HttpSendException {
+    default T send(Object object) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new ObjectMediaWriter(object));
     }
 
     //理论上只有 服务器才支持发送这种格式
-    default ServerEventStream sendEventStream() throws IllegalSenderStateException, HttpSendException {
+    default ServerEventStream sendEventStream() throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         var writer = new ServerEventStreamMediaWriter();
         send(writer);
         return writer.eventStream();
