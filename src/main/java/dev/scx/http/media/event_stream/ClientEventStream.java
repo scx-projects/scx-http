@@ -1,6 +1,5 @@
 package dev.scx.http.media.event_stream;
 
-import dev.scx.http.body.BodyReadException;
 import dev.scx.io.ByteInput;
 import dev.scx.io.exception.AlreadyClosedException;
 import dev.scx.io.exception.NoMatchFoundException;
@@ -33,7 +32,7 @@ public final class ClientEventStream implements AutoCloseable {
     }
 
     /// 读取事件
-    public SseEvent readEvent() throws BodyReadException {
+    public SseEvent readEvent() throws EventStreamParseException {
 
         // 获取事件的各个部分
         String event = null;
@@ -49,11 +48,11 @@ public final class ClientEventStream implements AutoCloseable {
             try {
                 bytes = byteInput.readUntil(LF_BYTES, maxLineLength);
             } catch (NoMatchFoundException e) {
-                throw new BodyReadException("SSE 行 过长!!! 最大长度 : " + maxLineLength);
+                throw new EventStreamParseException("SSE 行 过长!!! 最大长度 : " + maxLineLength);
             } catch (NoMoreDataException e) {
-                throw new BodyReadException("SSE 行 提前终止 !!!");
+                throw new EventStreamParseException("SSE 行 提前终止 !!!");
             } catch (ScxIOException e) {
-                throw new BodyReadException("SSE 行 读取异常 !!!", e);
+                throw new EventStreamParseException("SSE 行 读取异常 !!!", e);
             }
 
             var line = new String(bytes, charset);
@@ -77,7 +76,7 @@ public final class ClientEventStream implements AutoCloseable {
                     event = line.substring(7);
                 } else {
                     // 出现重复的 event:
-                    throw new BodyReadException("SSE 行 重复的 event");
+                    throw new EventStreamParseException("SSE 行 重复的 event");
                 }
                 continue;
             }
@@ -96,7 +95,7 @@ public final class ClientEventStream implements AutoCloseable {
                     id = line.substring(4);
                 } else {
                     // 出现重复 id:
-                    throw new BodyReadException("SSE 行 重复的 id");
+                    throw new EventStreamParseException("SSE 行 重复的 id");
                 }
                 continue;
             }
@@ -106,16 +105,16 @@ public final class ClientEventStream implements AutoCloseable {
                     try {
                         retry = Long.parseLong(line.substring(7));
                     } catch (NumberFormatException e) {
-                        throw new BodyReadException("SSE 行 retry 格式错误");
+                        throw new EventStreamParseException("SSE 行 retry 格式错误");
                     }
                 } else {
                     // 出现重复 retry
-                    throw new BodyReadException("SSE 行 重复的 retry");
+                    throw new EventStreamParseException("SSE 行 重复的 retry");
                 }
                 continue;
             }
 
-            throw new BodyReadException("SSE 非法行");
+            throw new EventStreamParseException("SSE 非法行");
 
         }
 
