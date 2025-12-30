@@ -4,7 +4,6 @@ import dev.scx.http.headers.ScxHttpHeaders;
 import dev.scx.http.headers.ScxHttpHeadersWritable;
 import dev.scx.http.media.MediaWriter;
 import dev.scx.http.media_type.FileFormat;
-import dev.scx.http.sender.HttpSendException;
 import dev.scx.io.ByteInput;
 import dev.scx.io.ByteOutput;
 import dev.scx.io.ScxIO;
@@ -25,18 +24,14 @@ public final class FileMediaWriter implements MediaWriter {
     private final long length;
     private final ByteInput byteInput;
 
-    public FileMediaWriter(File file) throws HttpSendException {
+    public FileMediaWriter(File file) throws ScxIOException {
         this(file, 0, file.length());
     }
 
-    public FileMediaWriter(File file, long offset, long length) throws HttpSendException {
+    public FileMediaWriter(File file, long offset, long length) throws ScxIOException {
         this.file = file;
         this.length = length;
-        try {
-            this.byteInput = ScxIO.createByteInput(file, offset, length);
-        } catch (ScxIOException e) {
-            throw new HttpSendException("读取 file 时发生异常 !!!", e.getCause());
-        }
+        this.byteInput = ScxIO.createByteInput(file, offset, length);
     }
 
     @Override
