@@ -32,12 +32,7 @@ public final class GzipHttpBody implements ScxHttpBody {
         }
         //等于 GZIP 我们尝试包装
         if (contentEncoding == GZIP) {
-            try {
-                return ScxIO.gzipByteInput(byteInput);
-            } catch (ScxIOException e) {
-                //原始流有可能并不是一个 合法的 gzip 流 我们抛出异常
-                throw new UnsupportedMediaTypeException(e.getCause());
-            }
+            return ScxIO.gzipByteInput(byteInput);
         } else {// 否则我们不支持这种类型 抛出异常
             throw new UnsupportedMediaTypeException("Unsupported Content-Encoding: " + contentEncoding);
         }
@@ -49,14 +44,8 @@ public final class GzipHttpBody implements ScxHttpBody {
     }
 
     @Override
-    public <T> T as(MediaReader<T> mediaReader) throws BodyReadException, BodyAlreadyConsumedException {
-        try {
-            return mediaReader.read(gzipByteInput, headers);
-        } catch (ScxIOException e) {
-            throw new BodyReadException(e);
-        } catch (AlreadyClosedException e) {
-            throw new BodyAlreadyConsumedException();
-        }
+    public <T> T as(MediaReader<T> mediaReader) throws ScxIOException, AlreadyClosedException {
+        return mediaReader.read(gzipByteInput, headers);
     }
 
     @Override

@@ -59,13 +59,13 @@ public interface ScxURI {
     /// @param u 标准 URI 对象
     /// @return 构造得到的 ScxURI
     static ScxURIWritable of(URI u) {
-        return new ScxURIImpl()
+        var scxURIWritable = new ScxURIImpl()
                 .scheme(u.getScheme())
                 .host(u.getHost())
                 .port(u.getPort() == -1 ? null : u.getPort())
-                .path(u.getPath())
-                .query(decodeQuery(u.getRawQuery()))
-                .fragment(u.getFragment());
+                .path(u.getPath());
+        decodeQuery(scxURIWritable.query(), u.getRawQuery());
+        return scxURIWritable.fragment(u.getFragment());
     }
 
     static ScxURIWritable of(ScxURI u) {

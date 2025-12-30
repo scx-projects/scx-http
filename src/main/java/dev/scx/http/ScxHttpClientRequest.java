@@ -5,11 +5,12 @@ import dev.scx.http.headers.ScxHttpHeaders;
 import dev.scx.http.headers.ScxHttpHeadersWritable;
 import dev.scx.http.media.MediaWriter;
 import dev.scx.http.method.ScxHttpMethod;
-import dev.scx.http.sender.HttpSendException;
 import dev.scx.http.sender.IllegalSenderStateException;
 import dev.scx.http.sender.ScxHttpSender;
 import dev.scx.http.uri.ScxURI;
 import dev.scx.http.uri.ScxURIWritable;
+import dev.scx.io.exception.AlreadyClosedException;
+import dev.scx.io.exception.ScxIOException;
 
 /// ScxHttpClientRequest
 ///
@@ -35,7 +36,7 @@ public interface ScxHttpClientRequest extends ScxHttpSender<ScxHttpClientRespons
     ScxHttpClientRequest headers(ScxHttpHeaders headers);
 
     @Override
-    ScxHttpClientResponse send(MediaWriter mediaWriter) throws IllegalSenderStateException, HttpSendException;
+    ScxHttpClientResponse send(MediaWriter mediaWriter) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException;
 
     //******************** 简化操作 *******************
 

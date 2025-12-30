@@ -1,8 +1,6 @@
 package dev.scx.http.media.multi_part;
 
 import dev.scx.function.Function0;
-import dev.scx.http.body.BodyAlreadyConsumedException;
-import dev.scx.http.body.BodyReadException;
 import dev.scx.http.body.ScxHttpBody;
 import dev.scx.http.headers.ScxHttpHeaders;
 import dev.scx.http.headers.content_disposition.ContentDisposition;
@@ -58,14 +56,8 @@ public interface MultiPartPart extends ScxHttpBody {
     }
 
     @Override
-    default <T> T as(MediaReader<T> mediaReader) throws BodyAlreadyConsumedException, BodyReadException {
-        try {
-            return mediaReader.read(byteInput(), headers());
-        } catch (ScxIOException e) {
-            throw new BodyReadException(e);
-        } catch (AlreadyClosedException e) {
-            throw new BodyAlreadyConsumedException();
-        }
+    default <T> T as(MediaReader<T> mediaReader) throws ScxIOException, AlreadyClosedException {
+        return mediaReader.read(byteInput(), headers());
     }
 
     default ScxMediaType contentType() {

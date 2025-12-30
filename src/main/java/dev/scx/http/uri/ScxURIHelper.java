@@ -16,8 +16,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public final class ScxURIHelper {
 
     /// 注意参数是 编码后的 rawQuery
-    public static ParametersWritable<String, String> decodeQuery(String rawQuery) {
-        ParametersWritable<String, String> query = Parameters.of();
+    public static <T extends ParametersWritable<String, String>> T decodeQuery(T query, String rawQuery) {
         if (rawQuery == null) {
             return query;
         }

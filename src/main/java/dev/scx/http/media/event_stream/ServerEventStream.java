@@ -1,6 +1,5 @@
 package dev.scx.http.media.event_stream;
 
-import dev.scx.http.sender.HttpSendException;
 import dev.scx.io.ByteOutput;
 import dev.scx.io.exception.AlreadyClosedException;
 import dev.scx.io.exception.ScxIOException;
@@ -80,12 +79,8 @@ public final class ServerEventStream implements AutoCloseable {
     /// 发送一个 SSE 事件
     ///
     /// @param sseEvent 要发送的 SSE 事件
-    public void send(SseEvent sseEvent) throws HttpSendException {
-        try {
-            send0(sseEvent, out);
-        } catch (ScxIOException | AlreadyClosedException e) {
-            throw new HttpSendException("发送 EventStream 时发生异常 !!!", e);
-        }
+    public void send(SseEvent sseEvent) throws ScxIOException, AlreadyClosedException {
+        send0(sseEvent, out);
     }
 
     @Override

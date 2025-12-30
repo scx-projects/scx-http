@@ -3,10 +3,11 @@ package dev.scx.http.test;
 import dev.scx.http.headers.ScxHttpHeaders;
 import dev.scx.http.headers.ScxHttpHeadersWritable;
 import dev.scx.http.media.MediaWriter;
-import dev.scx.http.sender.HttpSendException;
 import dev.scx.http.sender.IllegalSenderStateException;
 import dev.scx.http.sender.ScxHttpSender;
 import dev.scx.http.sender.ScxHttpSenderStatus;
+import dev.scx.io.exception.AlreadyClosedException;
+import dev.scx.io.exception.ScxIOException;
 import dev.scx.io.output.ByteArrayByteOutput;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -39,7 +40,7 @@ public class SenderTest {
         }
 
         @Override
-        public TestHttpSender send(MediaWriter mediaWriter) throws IllegalSenderStateException, HttpSendException {
+        public TestHttpSender send(MediaWriter mediaWriter) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
             mediaWriter.beforeWrite(responseHeaders, requestHeaders);
             mediaWriter.write(byteOut);
             return this;
