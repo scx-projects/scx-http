@@ -49,14 +49,8 @@ public final class GzipHttpBody implements ScxHttpBody {
     }
 
     @Override
-    public <T> T as(MediaReader<T> mediaReader) throws BodyReadException, BodyAlreadyConsumedException {
-        try {
-            return mediaReader.read(gzipByteInput, headers);
-        } catch (ScxIOException e) {
-            throw new BodyReadException(e);
-        } catch (AlreadyClosedException e) {
-            throw new BodyAlreadyConsumedException();
-        }
+    public <T> T as(MediaReader<T> mediaReader) throws ScxIOException, AlreadyClosedException {
+        return mediaReader.read(gzipByteInput, headers);
     }
 
     @Override
