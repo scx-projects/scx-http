@@ -1,7 +1,5 @@
 package dev.scx.http.test;
 
-import dev.scx.http.body.BodyAlreadyConsumedException;
-import dev.scx.http.body.BodyReadException;
 import dev.scx.http.body.ScxHttpBody;
 import dev.scx.http.headers.ScxHttpHeaders;
 import dev.scx.http.headers.content_encoding.ContentEncoding;
@@ -39,7 +37,7 @@ public class BodyTest {
         // 第一次读取 正常
         Assert.assertEquals(string, "123456789abcdefg");
         // 第二次读取 报错
-        Assert.assertThrows(BodyAlreadyConsumedException.class, () -> s.asString());
+        Assert.assertThrows(AlreadyClosedException.class, () -> s.asString());
         // 底层应该被关闭
         Assert.assertEquals(rawData.isClosed(), true);
     }
@@ -77,7 +75,7 @@ public class BodyTest {
         // 第一次读取 正常
         Assert.assertEquals(string, "123456789abcdefg");
         // 第二次读取 报错
-        Assert.assertThrows(BodyAlreadyConsumedException.class, () -> s.asString());
+        Assert.assertThrows(AlreadyClosedException.class, () -> s.asString());
         // 底层应该被关闭
         Assert.assertEquals(rawData.isClosed(), true);
     }
@@ -115,14 +113,8 @@ public class BodyTest {
     public record TestHttpBody(ByteInput byteInput, ScxHttpHeaders headers) implements ScxHttpBody {
 
         @Override
-        public <T> T as(MediaReader<T> mediaReader) throws BodyAlreadyConsumedException, BodyReadException {
-            try {
-                return mediaReader.read(byteInput, headers);
-            } catch (ScxIOException e) {
-                throw new BodyReadException(e);
-            } catch (AlreadyClosedException e) {
-                throw new BodyAlreadyConsumedException();
-            }
+        public <T> T as(MediaReader<T> mediaReader) throws ScxIOException, AlreadyClosedException {
+            return mediaReader.read(byteInput, headers);
         }
 
     }
