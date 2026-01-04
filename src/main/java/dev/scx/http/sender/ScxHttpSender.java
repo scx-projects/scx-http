@@ -11,13 +11,10 @@ import dev.scx.http.media.form_params.FormParamsMediaWriter;
 import dev.scx.http.media.input_stream.InputStreamMediaWriter;
 import dev.scx.http.media.multi_part.MultiPart;
 import dev.scx.http.media.multi_part.MultiPartMediaWriter;
-import dev.scx.http.media.node.NodeMediaWriter;
-import dev.scx.http.media.object.ObjectMediaWriter;
 import dev.scx.http.media.string.StringMediaWriter;
 import dev.scx.io.ByteInput;
 import dev.scx.io.exception.AlreadyClosedException;
 import dev.scx.io.exception.ScxIOException;
-import dev.scx.node.Node;
 
 import java.io.File;
 import java.io.InputStream;
@@ -75,14 +72,6 @@ public interface ScxHttpSender<T> {
 
     default T send(MultiPart multiPart) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
         return send(new MultiPartMediaWriter(multiPart));
-    }
-
-    default T send(Node node) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
-        return send(new NodeMediaWriter(node));
-    }
-
-    default T send(Object object) throws IllegalSenderStateException, ScxIOException, AlreadyClosedException {
-        return send(new ObjectMediaWriter(object));
     }
 
     //理论上只有 服务器才支持发送这种格式

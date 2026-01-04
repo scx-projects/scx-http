@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>scx-http</artifactId>
-    <version>0.0.5</version>
+    <version>0.0.6</version>
     <packaging>jar</packaging>
 
     <name>SCX HTTP</name>
@@ -83,12 +83,6 @@
 
         <dependency>
             <groupId>dev.scx</groupId>
-            <artifactId>scx-serialize</artifactId>
-            <version>${scx-serialize.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>dev.scx</groupId>
             <artifactId>scx-random</artifactId>
             <version>${scx-random.version}</version>
         </dependency>
@@ -108,7 +102,6 @@
         <!-- *********************** 以下为依赖包版本 *********************** -->
         <scx-collection.version>0.0.1</scx-collection.version>
         <scx-io.version>0.0.1</scx-io.version>
-        <scx-serialize.version>0.0.2</scx-serialize.version>
         <scx-random.version>0.0.1</scx-random.version>
         <testng.version>7.11.0</testng.version>
 
