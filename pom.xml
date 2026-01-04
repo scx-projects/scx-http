@@ -108,7 +108,7 @@
         <!-- *********************** 以下为依赖包版本 *********************** -->
         <scx-collection.version>0.0.1</scx-collection.version>
         <scx-io.version>0.0.1</scx-io.version>
-        <scx-serialize.version>0.0.1</scx-serialize.version>
+        <scx-serialize.version>0.0.2</scx-serialize.version>
         <scx-random.version>0.0.1</scx-random.version>
         <testng.version>7.11.0</testng.version>
 
