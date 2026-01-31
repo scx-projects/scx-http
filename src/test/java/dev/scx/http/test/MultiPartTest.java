@@ -6,7 +6,7 @@ import dev.scx.http.media.multi_part.MultiPartPart;
 import dev.scx.http.media.multi_part.MultiPartStream;
 import dev.scx.http.media_type.MediaType;
 import dev.scx.http.media_type.ScxMediaType;
-import dev.scx.io.output.ByteArrayByteOutput;
+import dev.scx.io.output.LazyByteArrayByteOutput;
 import dev.scx.io.supplier.ByteArrayByteSupplier;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -114,7 +114,7 @@ public class MultiPartTest {
     private static byte[] createMultiPartBytes(MultiPart multipart) {
         var ss = new MultiPartMediaWriter(multipart);
 
-        var b = new ByteArrayByteOutput();
+        var b = new LazyByteArrayByteOutput();
         ss.write(b);
         return b.bytes();
     }

@@ -4,6 +4,7 @@ import dev.scx.http.media.MediaWriter;
 import dev.scx.http.media_type.ScxMediaType;
 import dev.scx.io.ByteInput;
 import dev.scx.io.ByteOutput;
+import dev.scx.io.ScxIO;
 import dev.scx.io.exception.InputAlreadyClosedException;
 import dev.scx.io.exception.OutputAlreadyClosedException;
 import dev.scx.io.exception.ScxInputException;
@@ -43,7 +44,7 @@ public final class ByteInputMediaWriter implements MediaWriter {
     public void write(ByteOutput byteOutput) throws ScxOutputException, OutputAlreadyClosedException, ScxInputException, InputAlreadyClosedException {
         try (byteOutput) {
             // 这里发生的 ScxInputException, InputAlreadyClosedException 错误我们直接穿透.
-            byteInput.transferToAll(byteOutput);
+            ScxIO.transferToAll(byteInput, byteOutput);
         }
         // 不在 finally 中关闭:
         // 仅当写入流程完整成功(包括 ByteOutput 关闭阶段)且 autoClose=true 时才关闭 byteInput.
