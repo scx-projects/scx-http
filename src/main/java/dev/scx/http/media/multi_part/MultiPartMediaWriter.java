@@ -2,8 +2,8 @@ package dev.scx.http.media.multi_part;
 
 import dev.scx.http.media.MediaWriter;
 import dev.scx.http.media_type.ScxMediaType;
-import dev.scx.io.ByteChunk;
 import dev.scx.io.ByteOutput;
+import dev.scx.io.ScxIO;
 import dev.scx.io.exception.InputAlreadyClosedException;
 import dev.scx.io.exception.OutputAlreadyClosedException;
 import dev.scx.io.exception.ScxInputException;
@@ -38,11 +38,11 @@ public final class MultiPartMediaWriter implements MediaWriter {
     @Override
     public void write(ByteOutput byteOutput) throws ScxOutputException, OutputAlreadyClosedException, ScxInputException, InputAlreadyClosedException {
         //头
-        var h = ByteChunk.of("--" + multiPart.boundary() + "\r\n");
+        var h = ("--" + multiPart.boundary() + "\r\n").getBytes();
         //尾
-        var f = ByteChunk.of("--" + multiPart.boundary() + "--\r\n");
+        var f = ("--" + multiPart.boundary() + "--\r\n").getBytes();
         //换行符
-        var l = ByteChunk.of("\r\n");
+        var l = "\r\n".getBytes();
         try (byteOutput) {
             //发送每个内容
             for (var multiPartPart : multiPart) {
@@ -50,13 +50,13 @@ public final class MultiPartMediaWriter implements MediaWriter {
                 byteOutput.write(h);
                 var headers = multiPartPart.headers().encode();
                 //写入头
-                byteOutput.write(ByteChunk.of(headers));
+                byteOutput.write(headers.getBytes());
                 //写入换行符
                 byteOutput.write(l);
                 //写入内容
                 try (var i = multiPartPart.body()) {
                     // 这里发生的 ScxInputException, InputAlreadyClosedException 错误我们直接穿透.
-                    i.transferToAll(byteOutput);
+                    ScxIO.transferToAll(i, byteOutput);
                 }
                 //写入换行符
                 byteOutput.write(l);

@@ -14,7 +14,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 import static dev.scx.io.ScxIO.createByteInput;
-import static dev.scx.io.supplier.ClosePolicyByteSupplier.noCloseDrain;
+import static dev.scx.io.ScxIO.drainOnCloseNoClose;
 
 /// MultiPartStream
 ///
@@ -80,7 +80,7 @@ public final class MultiPartStream implements MultiPart, Iterator<MultiPartPart>
         // 1, 创建一个 可以一直读取到 分隔符的 字节 提供器
         var boundaryByteSupplier = new BoundaryByteSupplier(byteInput, new KMPByteIndexer(boundaryEndBytes), true);
         // 2, 设置为 不关闭底层 + close 时排空.
-        return createByteInput(noCloseDrain(boundaryByteSupplier));
+        return createByteInput(drainOnCloseNoClose(boundaryByteSupplier));
     }
 
     @Override

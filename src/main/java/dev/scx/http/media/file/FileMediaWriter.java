@@ -55,7 +55,7 @@ public final class FileMediaWriter implements MediaWriter {
         // 因为 byteInput 是我们自己创建的, 我们有责任自动关闭
         try (byteOutput; byteInput) {
             // 这里发生的 ScxInputException, InputAlreadyClosedException 错误我们直接穿透.
-            byteInput.transferToAll(byteOutput);
+            ScxIO.transferToAll(byteInput, byteOutput);
         }
     }
 
