@@ -7,7 +7,7 @@ import dev.scx.http.sender.IllegalSenderStateException;
 import dev.scx.http.sender.ScxHttpMediaSender;
 import dev.scx.http.sender.ScxHttpReceiveException;
 import dev.scx.http.sender.ScxHttpSendException;
-import dev.scx.io.output.LazyByteArrayByteOutput;
+import dev.scx.io.output.ByteArrayByteOutput;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
@@ -44,14 +44,14 @@ public class SenderTest {
 
     public static class TestHttpSender implements ScxHttpMediaSender<TestHttpSender> {
 
-        public final LazyByteArrayByteOutput byteOut;
+        public final ByteArrayByteOutput byteOut;
         private final ScxHttpHeadersWritable responseHeaders;
         private final ScxHttpHeaders requestHeaders;
 
         public TestHttpSender(ScxHttpHeadersWritable responseHeaders, ScxHttpHeaders requestHeaders) {
             this.responseHeaders = responseHeaders;
             this.requestHeaders = requestHeaders;
-            this.byteOut = new LazyByteArrayByteOutput();
+            this.byteOut = new ByteArrayByteOutput();
         }
 
         @Override
