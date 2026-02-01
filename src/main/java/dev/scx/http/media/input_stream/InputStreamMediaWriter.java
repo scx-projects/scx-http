@@ -2,10 +2,11 @@ package dev.scx.http.media.input_stream;
 
 import dev.scx.http.media.MediaWriter;
 import dev.scx.http.media_type.ScxMediaType;
-import dev.scx.io.ByteChunk;
 import dev.scx.io.ByteOutput;
 import dev.scx.io.exception.OutputAlreadyClosedException;
+import dev.scx.io.exception.ScxInputException;
 import dev.scx.io.exception.ScxOutputException;
+import dev.scx.io.supplier.InputStreamByteSupplier;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,9 +19,7 @@ import java.io.InputStream;
 /// @version 0.0.1
 public final class InputStreamMediaWriter implements MediaWriter {
 
-    private static final int DEFAULT_BUFFER_SIZE = 16384;
-
-    private final InputStream inputStream;
+    private final InputStreamByteSupplier inputStreamByteSupplier;
     private final boolean autoClose;
 
     public InputStreamMediaWriter(InputStream inputStream) {
@@ -29,7 +28,7 @@ public final class InputStreamMediaWriter implements MediaWriter {
     }
 
     public InputStreamMediaWriter(InputStream inputStream, boolean autoClose) {
-        this.inputStream = inputStream;
+        this.inputStreamByteSupplier = new InputStreamByteSupplier(inputStream);
         this.autoClose = autoClose;
     }
 
@@ -46,18 +45,22 @@ public final class InputStreamMediaWriter implements MediaWriter {
 
     @Override
     public void write(ByteOutput byteOutput) throws ScxOutputException, OutputAlreadyClosedException, IOException {
-        byte[] buffer = new byte[DEFAULT_BUFFER_SIZE];
-        int read;
         try (byteOutput) {
-            while ((read = inputStream.read(buffer, 0, DEFAULT_BUFFER_SIZE)) >= 0) {
-                byteOutput.write(ByteChunk.of(buffer, 0, read));
-            }
+            inputStreamByteSupplier.transferToAll(byteOutput);
+        } catch (ScxInputException e) {
+            // 这里必然是 IOException 强转安全.
+            throw (IOException) e.getCause();
         }
         // 不在 finally 中关闭:
         // 仅当写入流程完整成功(包括 ByteOutput 关闭阶段)且 autoClose=true 时才关闭 inputStream.
         // 若写入过程中抛出异常, 将保留 inputStream 由调用方自行处理.
         if (autoClose) {
-            inputStream.close();
+            try {
+                inputStreamByteSupplier.close();
+            } catch (ScxInputException e) {
+                // 这里必然是 IOException 强转安全.
+                throw (IOException) e.getCause();
+            }
         }
     }
 
