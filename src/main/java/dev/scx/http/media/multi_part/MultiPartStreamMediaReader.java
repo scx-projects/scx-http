@@ -1,0 +1,49 @@
+package dev.scx.http.media.multi_part;
+
+import dev.scx.http.media.MediaReader;
+import dev.scx.http.media_type.ScxMediaType;
+import dev.scx.io.ByteInput;
+
+import static dev.scx.http.media_type.MediaType.MULTIPART_FORM_DATA;
+
+/// MultiPartStreamMediaReader
+///
+/// @author scx567888
+/// @version 0.0.1
+public final class MultiPartStreamMediaReader implements MediaReader<MultiPartStream, RuntimeException> {
+
+    /// 默认 128 KB
+    public static final MultiPartStreamMediaReader MULTI_PART_STREAM_MEDIA_READER = new MultiPartStreamMediaReader(1024 * 128);
+
+    /// 最大 part 头长度, 防止恶意攻击
+    private final int maxPartHeaderSize;
+
+    public MultiPartStreamMediaReader(int maxPartHeaderSize) {
+        this.maxPartHeaderSize = maxPartHeaderSize;
+    }
+
+    public static String checkedBoundary(ScxMediaType mediaType) throws IllegalArgumentException, IllegalBoundaryException {
+        // 分块传输依赖 contentType 所以这里需要强制校验
+        if (mediaType == null) {
+            // 这里 不抛出客户端异常 因为 这是用户调用的, 问题不能怪罪到客户端
+            throw new IllegalArgumentException("No Content-Type header found");
+        }
+        if (!MULTIPART_FORM_DATA.equalsIgnoreParams(mediaType)) {
+            // 同上 这里 不抛出客户端异常 因为 这是用户调用的, 问题不能怪罪到客户端
+            throw new IllegalArgumentException("Content-Type is not multipart/form-data");
+        }
+        var boundary = mediaType.boundary();
+        if (boundary == null) {
+            // 当 Content-Type 已经是 MULTIPART_FORM_DATA 了 ,  boundary 是必须的 所以这里抛出客户端错误
+            throw new IllegalBoundaryException("No boundary found");
+        }
+        return boundary;
+    }
+
+    @Override
+    public MultiPartStream read(ByteInput byteInput, ScxMediaType mediaType) throws IllegalArgumentException, IllegalBoundaryException {
+        var boundary = checkedBoundary(mediaType);
+        return new MultiPartStream(byteInput, boundary, this.maxPartHeaderSize);
+    }
+
+}
