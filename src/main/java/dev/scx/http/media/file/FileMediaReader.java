@@ -50,7 +50,7 @@ public final class FileMediaReader implements MediaReader<File, IOException> {
         }
 
         // 获取 ByteOutput 并写入
-        try (var outputStream = Files.newOutputStream(path, options)) {
+        try (byteInput; var outputStream = Files.newOutputStream(path, options)) {
             ScxIO.transferToAll(byteInput, outputStream);
         }
 
