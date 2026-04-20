@@ -1,0 +1,15 @@
+package dev.scx.http.error_handler;
+
+/// 错误阶段
+///
+/// @author scx567888
+/// @version 0.0.1
+public enum ErrorPhase {
+
+    /// 系统阶段, 比如解析 HTTP 头时发生错误.
+    SYSTEM,
+
+    /// 用户阶段, 比如用户代码错误.
+    USER
+
+}
