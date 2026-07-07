@@ -1,0 +1,20 @@
+package dev.scx.http.test;
+
+import dev.scx.http.headers.HttpHeaderName;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class HttpHeaderNameTest {
+
+    public static void main(String[] args) {
+        test1();
+    }
+
+    @Test
+    public static void test1() {
+        for (var value : HttpHeaderName.values()) {
+            Assert.assertEquals(value.value().toLowerCase(), value.name().replaceAll("_", "-").toLowerCase());
+        }
+    }
+
+}

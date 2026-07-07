@@ -1,0 +1,12 @@
+package dev.scx.http.headers.cookie;
+
+/// CookiesWritable
+///
+/// @author scx567888
+public interface CookiesWritable extends Cookies {
+
+    CookiesWritable remove(String name);
+
+    CookiesWritable add(Cookie cookie);
+
+}

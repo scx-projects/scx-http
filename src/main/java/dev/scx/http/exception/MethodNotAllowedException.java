@@ -1,0 +1,26 @@
+package dev.scx.http.exception;
+
+import static dev.scx.http.status_code.HttpStatusCode.METHOD_NOT_ALLOWED;
+
+/// MethodNotAllowedException
+///
+/// @author scx567888
+public class MethodNotAllowedException extends HttpException {
+
+    public MethodNotAllowedException() {
+        super(METHOD_NOT_ALLOWED);
+    }
+
+    public MethodNotAllowedException(String message) {
+        super(METHOD_NOT_ALLOWED, message);
+    }
+
+    public MethodNotAllowedException(Throwable cause) {
+        super(METHOD_NOT_ALLOWED, cause);
+    }
+
+    public MethodNotAllowedException(String message, Throwable cause) {
+        super(METHOD_NOT_ALLOWED, message, cause);
+    }
+
+}
