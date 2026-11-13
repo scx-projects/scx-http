@@ -30,7 +30,7 @@ public final class ByteInputMediaWriter implements MediaWriter {
 
     @Override
     public Long bodyLength() {
-        // 这里也可以使用 通过 instanceof 之类的方法来获取 byteInput 的真实字节数,但这里为了简化逻辑 统一返回 null.
+        // 这里也可以 通过 instanceof 之类的方法来获取 byteInput 的真实字节数,但这里为了简化逻辑 统一返回 null.
         return null;
     }
 
