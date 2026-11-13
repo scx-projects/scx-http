@@ -20,7 +20,7 @@ public interface FormParams extends Parameters<String, String> {
         return FormParamsHelper.parseFormParams(new FormParamsImpl(), encodedStr);
     }
 
-    /// 编码成 from 表单格式
+    /// 编码成 form 表单格式
     default String encode() {
         return FormParamsHelper.encodeFormParams(this);
     }
